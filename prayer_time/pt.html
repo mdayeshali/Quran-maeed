@@ -14,17 +14,16 @@
 <section class="hero">
     <h2>🕌 নামাজের সময়</h2>
     <p id="hijriDate">লোড হচ্ছে...</p>
+    <p id="banglaDate"></p>
 </section>
 
 <div class="container">
 
-    <!-- 🔥 NEXT PRAYER CARD -->
+    <!-- NEXT PRAYER -->
     <div class="card center" id="nextPrayerCard">
         <h3>🕌 নামাজ আপডেট</h3>
-
         <p id="currentPrayer">লোড হচ্ছে...</p>
         <p id="nextPrayer"></p>
-
         <p id="countdown"></p>
     </div>
 
@@ -34,7 +33,16 @@
         <p id="locationText">লোড হচ্ছে...</p>
     </div>
 
-    <!-- FULL PRAYER LIST -->
+    <!-- MADHAB -->
+    <div class="card center">
+        <h3>⚖️ মাযহাব (আসর)</h3>
+        <select id="madhabSelect" onchange="changeMadhab()">
+            <option value="1">হানাফি</option>
+            <option value="0">শাফি / অন্যান্য</option>
+        </select>
+    </div>
+
+    <!-- FULL LIST -->
     <div class="card">
         <h3>🕒 আজকের নামাজের সময়</h3>
         <div id="prayerList">
