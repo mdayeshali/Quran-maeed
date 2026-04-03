@@ -1,89 +1,60 @@
 let userLat, userLon;
+let school = localStorage.getItem("madhab") || "1";
 
-// 🚀 Page load হলে auto run
+// 🚀 Load
 window.onload = function () {
-    loadSavedData();   // আগে পুরাতন data দেখাবে
-    getUserGPS();      // তারপর নতুন data fetch করার চেষ্টা করবে
+    loadSavedData();
+    document.getElementById("madhabSelect").value = school;
+    getUserGPS();
 };
 
-// 📦 LocalStorage থেকে data load
+// 📦 Old Data
 function loadSavedData() {
     const saved = localStorage.getItem("prayerData");
+    const loc = localStorage.getItem("locationName");
 
-    if (saved) {
-        const data = JSON.parse(saved);
-        showPrayer(data);
-    }
+    if (saved) showPrayer(JSON.parse(saved));
+    if (loc) document.getElementById("locationText").innerText = loc;
 }
 
-// 📡 Auto Location
+// 📡 GPS
 function getUserGPS() {
-    if (!navigator.geolocation) {
-        console.log("GPS নেই");
-        return;
-    }
-
     navigator.geolocation.getCurrentPosition(
         async (pos) => {
             userLat = pos.coords.latitude;
             userLon = pos.coords.longitude;
 
             try {
-                // 🌍 Location name
-                const geoRes = await fetch(
-                    `https://nominatim.openstreetmap.org/reverse?lat=${userLat}&lon=${userLon}&format=json`
-                );
-                const geoData = await geoRes.json();
+                const geo = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${userLat}&lon=${userLon}&format=json`);
+                const g = await geo.json();
 
-                const addr = geoData.address;
+                const addr = g.address;
+                const locText = `📍 ${addr.city || addr.town || addr.village || ""}, ${addr.state || ""}, ${addr.country || ""}`;
 
-                const city =
-                    addr.city ||
-                    addr.town ||
-                    addr.village ||
-                    "Unknown";
+                document.getElementById("locationText").innerText = locText;
+                localStorage.setItem("locationName", locText);
 
-                const state = addr.state || "";
-                const country = addr.country || "";
+                const res = await fetch(`https://api.aladhan.com/v1/timings?latitude=${userLat}&longitude=${userLon}&school=${school}`);
+                const data = await res.json();
 
-                const locationText = `📍 ${city}, ${state}, ${country}`;
-                document.getElementById("locationText").innerText = locationText;
+                localStorage.setItem("prayerData", JSON.stringify(data.data));
+                showPrayer(data.data);
 
-                // 🕌 Prayer API
-                const res = await fetch(
-                    `https://api.aladhan.com/v1/timings?latitude=${userLat}&longitude=${userLon}`
-                );
-
-                const result = await res.json();
-
-                // 👉 data save করুন
-                localStorage.setItem("prayerData", JSON.stringify(result.data));
-                localStorage.setItem("locationName", locationText);
-
-                showPrayer(result.data);
-
-            } catch (err) {
-                console.log("API error", err);
-            }
+            } catch {}
         },
-        () => {
-            console.log("লোকেশন বন্ধ");
-
-            // ❗ Location না পেলে পুরাতন location নাম দেখান
-            const savedLoc = localStorage.getItem("locationName");
-            if (savedLoc) {
-                document.getElementById("locationText").innerText = savedLoc;
-            }
-        }
+        () => {}
     );
 }
 
-// 🕌 Show Prayer
+// 🕌 Show
 function showPrayer(data) {
     const t = data.timings;
 
+    const h = data.date.hijri;
     document.getElementById("hijriDate").innerText =
-        data.date.hijri.date + " হিজরি";
+        `${h.day} ${h.month.en} ${h.year} হিজরি`;
+
+    document.getElementById("banglaDate").innerText = getBanglaDate();
 
     document.getElementById("prayerList").innerHTML = `
         <div class="prayer"><span>ফজর</span><span>${t.Fajr}</span></div>
@@ -96,44 +67,40 @@ function showPrayer(data) {
     updateNextPrayer(t);
 }
 
-// ⏳ Next Prayer + Countdown
-function updateNextPrayer(timings) {
-
+// ⏳ Next Prayer
+function updateNextPrayer(t) {
     const now = new Date();
 
-    const prayerTimes = [
-        {name: "ফজর", time: timings.Fajr},
-        {name: "যোহর", time: timings.Dhuhr},
-        {name: "আসর", time: timings.Asr},
-        {name: "মাগরিব", time: timings.Maghrib},
-        {name: "ইশা", time: timings.Isha}
+    const list = [
+        {name:"ফজর",time:t.Fajr},
+        {name:"যোহর",time:t.Dhuhr},
+        {name:"আসর",time:t.Asr},
+        {name:"মাগরিব",time:t.Maghrib},
+        {name:"ইশা",time:t.Isha}
     ];
 
-    let next = null;
-    let current = null;
+    let next, current;
 
-    for (let i = 0; i < prayerTimes.length; i++) {
+    for (let i=0;i<list.length;i++) {
+        let [h,m]=list[i].time.split(":");
+        let d=new Date();
+        d.setHours(h,m,0);
 
-        let [h, m] = prayerTimes[i].time.split(":");
-        let prayerDate = new Date();
-        prayerDate.setHours(h, m, 0);
-
-        if (now < prayerDate) {
-            next = { ...prayerTimes[i], date: prayerDate };
-            current = prayerTimes[i - 1] || prayerTimes[prayerTimes.length - 1];
+        if(now<d){
+            next={...list[i],date:d};
+            current=list[i-1]||list[list.length-1];
             break;
         }
     }
 
-    if (!next) {
-        next = prayerTimes[0];
-        current = prayerTimes[prayerTimes.length - 1];
-
-        let [h, m] = next.time.split(":");
-        let prayerDate = new Date();
-        prayerDate.setDate(now.getDate() + 1);
-        prayerDate.setHours(h, m, 0);
-        next.date = prayerDate;
+    if(!next){
+        next=list[0];
+        current=list[list.length-1];
+        let [h,m]=next.time.split(":");
+        let d=new Date();
+        d.setDate(now.getDate()+1);
+        d.setHours(h,m,0);
+        next.date=d;
     }
 
     document.getElementById("currentPrayer").innerText =
@@ -142,15 +109,30 @@ function updateNextPrayer(timings) {
     document.getElementById("nextPrayer").innerText =
         `👉 পরবর্তী: ${next.name} (${next.time})`;
 
-    // ⏳ Countdown
-    setInterval(() => {
-        const diff = next.date - new Date();
-
-        let h = Math.floor(diff / (1000 * 60 * 60));
-        let m = Math.floor((diff / (1000 * 60)) % 60);
-        let s = Math.floor((diff / 1000) % 60);
+    setInterval(()=>{
+        const diff=next.date-new Date();
+        let h=Math.floor(diff/3600000);
+        let m=Math.floor((diff/60000)%60);
+        let s=Math.floor((diff/1000)%60);
 
         document.getElementById("countdown").innerText =
             `⏳ ${h}h ${m}m ${s}s`;
-    }, 1000);
+    },1000);
+}
+
+// ⚖️ Madhab
+function changeMadhab(){
+    school=document.getElementById("madhabSelect").value;
+    localStorage.setItem("madhab",school);
+    getUserGPS();
+}
+
+// 🇧🇩 Bangla Date
+function getBanglaDate(){
+    const d=new Date();
+    const months=["বৈশাখ","জ্যৈষ্ঠ","আষাঢ়","শ্রাবণ","ভাদ্র","আশ্বিন","কার্তিক","অগ্রহায়ণ","পৌষ","মাঘ","ফাল্গুন","চৈত্র"];
+    const start=new Date(d.getFullYear(),3,14);
+    let diff=Math.floor((d-start)/86400000);
+    if(diff<0) diff+=365;
+    return `${(diff%30)+1} ${months[Math.floor(diff/30)]}`;
 }
