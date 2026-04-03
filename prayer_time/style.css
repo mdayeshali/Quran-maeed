@@ -11,16 +11,10 @@ body {
     color: white;
     text-align: center;
     padding: 30px 20px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-
-.hero h2 {
-    margin: 0;
 }
 
 .hero p {
-    margin-top: 8px;
-    opacity: 0.9;
+    margin: 5px 0;
 }
 
 /* CONTAINER */
@@ -48,31 +42,35 @@ h3 {
     color: #004d40;
 }
 
-/* NEXT PRAYER CARD */
+/* NEXT PRAYER */
 #nextPrayerCard {
     background: linear-gradient(135deg,#e0f2f1,#ffffff);
 }
 
 #currentPrayer {
-    font-size: 15px;
     color: #555;
 }
 
 #nextPrayer {
-    font-size: 17px;
     font-weight: bold;
     color: #004d40;
     background: #e0f2f1;
     padding: 8px;
     border-radius: 8px;
-    margin-top: 5px;
 }
 
 #countdown {
-    margin-top: 8px;
     font-size: 18px;
     font-weight: bold;
     color: #00796b;
+}
+
+/* SELECT */
+select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
 }
 
 /* PRAYER LIST */
@@ -81,15 +79,20 @@ h3 {
     justify-content: space-between;
     padding: 10px;
     border-bottom: 1px solid #eee;
-    font-size: 16px;
 }
 
 .prayer:last-child {
     border-bottom: none;
 }
 
-/* LOCATION TEXT */
+/* LOCATION */
 #locationText {
     font-weight: bold;
     color: #00796b;
+}
+
+/* Bangla Date */
+#banglaDate {
+    font-size: 14px;
+    opacity: 0.9;
 }
