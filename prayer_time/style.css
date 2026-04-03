@@ -2,47 +2,94 @@ body {
     margin: 0;
     font-family: 'Noto Sans Bengali', sans-serif;
     background: #f0f2f5;
+    color: #333;
 }
 
+/* HERO */
 .hero {
     background: linear-gradient(135deg,#004d40,#00796b);
     color: white;
     text-align: center;
-    padding: 30px;
+    padding: 30px 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
+.hero h2 {
+    margin: 0;
+}
+
+.hero p {
+    margin-top: 8px;
+    opacity: 0.9;
+}
+
+/* CONTAINER */
 .container {
     max-width: 500px;
     margin: auto;
     padding: 15px;
 }
 
+/* CARD */
 .card {
     background: white;
     padding: 15px;
     margin-bottom: 15px;
-    border-radius: 12px;
+    border-radius: 14px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
 }
 
 .center {
     text-align: center;
 }
 
-button {
-    width: 100%;
-    padding: 12px;
-    background: #00796b;
-    color: white;
-    border: none;
-    margin-top: 10px;
-    border-radius: 8px;
-    font-size: 15px;
+h3 {
+    margin-top: 0;
+    color: #004d40;
 }
 
+/* NEXT PRAYER CARD */
+#nextPrayerCard {
+    background: linear-gradient(135deg,#e0f2f1,#ffffff);
+}
+
+#currentPrayer {
+    font-size: 15px;
+    color: #555;
+}
+
+#nextPrayer {
+    font-size: 17px;
+    font-weight: bold;
+    color: #004d40;
+    background: #e0f2f1;
+    padding: 8px;
+    border-radius: 8px;
+    margin-top: 5px;
+}
+
+#countdown {
+    margin-top: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #00796b;
+}
+
+/* PRAYER LIST */
 .prayer {
     display: flex;
     justify-content: space-between;
     padding: 10px;
     border-bottom: 1px solid #eee;
     font-size: 16px;
+}
+
+.prayer:last-child {
+    border-bottom: none;
+}
+
+/* LOCATION TEXT */
+#locationText {
+    font-weight: bold;
+    color: #00796b;
 }
