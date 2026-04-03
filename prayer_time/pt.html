@@ -10,6 +10,7 @@
 </head>
 <body>
 
+<!-- HERO -->
 <section class="hero">
     <h2>🕌 নামাজের সময়</h2>
     <p id="hijriDate">লোড হচ্ছে...</p>
@@ -17,18 +18,27 @@
 
 <div class="container">
 
-    <!-- Location -->
-    <div class="card center">
-        <h3>📍 আপনার লোকেশন</h3>
-        <p id="locationText">লোকেশন পাওয়া যায়নি</p>
-        <button onclick="getUserGPS()">📡 অটো লোকেশন চালু করুন</button>
+    <!-- 🔥 NEXT PRAYER CARD -->
+    <div class="card center" id="nextPrayerCard">
+        <h3>🕌 নামাজ আপডেট</h3>
+
+        <p id="currentPrayer">লোড হচ্ছে...</p>
+        <p id="nextPrayer"></p>
+
+        <p id="countdown"></p>
     </div>
 
-    <!-- Prayer Times -->
+    <!-- LOCATION -->
+    <div class="card center">
+        <h3>📍 আপনার লোকেশন</h3>
+        <p id="locationText">লোড হচ্ছে...</p>
+    </div>
+
+    <!-- FULL PRAYER LIST -->
     <div class="card">
-        <h3>🕒 নামাজের সময়</h3>
+        <h3>🕒 আজকের নামাজের সময়</h3>
         <div id="prayerList">
-            <p style="text-align:center;">লোকেশন চালু করুন</p>
+            <p style="text-align:center;">লোড হচ্ছে...</p>
         </div>
     </div>
 
