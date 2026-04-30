@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>নবীদের জীবনকাহিনী — Islamic Light</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/prophets.css">
+</head>
+
+<body>
+  <div id="header"></div>
+
+  <section class="prophet-hero">
+    <div class="hero-content">
+      <h1>নবীদের জীবনকাহিনী</h1>
+      <p>কুরআন ও সহিহ হাদিসের আলোকে আম্বিয়া আলাইহিমুস সালামগণের জীবনী</p>
+    </div>
+  </section>
+
+  <div class="search-container">
+    <div class="search-wrapper">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="text" id="prophetSearch" placeholder="নবীর নাম লিখে খুঁজুন...">
+    </div>
+  </div>
+
+  <main class="prophet-container">
+    <div class="prophet-grid" id="prophetGrid">
+      
+      <div class="prophet-card">
+        <div class="prophet-info">
+          <span class="prophet-no">১</span>
+          <h3>হযরত আদম (আঃ)</h3>
+          <p>মানবজাতির আদি পিতা এবং পৃথিবীর প্রথম নবী।</p>
+        </div>
+        <a href="adam/index.html" class="view-btn">কাহিনীর সূচিপত্র <i class="fa-solid fa-chevron-right"></i></a>
+      </div>
+
+      <div class="prophet-card">
+        <div class="prophet-info">
+          <span class="prophet-no">২</span>
+          <h3>হযরত নূহ (আঃ)</h3>
+          <p>যাঁর সময়ে মহাপ্লাবন হয়েছিল এবং ঈমানদাররা কিশতিতে রক্ষা পেয়েছিল।</p>
+        </div>
+        <a href="nuh/index.html" class="view-btn">কাহিনীর সূচিপত্র <i class="fa-solid fa-chevron-right"></i></a>
+      </div>
+
+      <div class="prophet-card">
+        <div class="prophet-info">
+          <span class="prophet-no">৩</span>
+          <h3>হযরত ইব্রাহিম (আঃ)</h3>
+          <p>মুসলিম জাতির পিতা এবং খালিলুল্লাহ উপাধিতে ভূষিত।</p>
+        </div>
+        <a href="ibrahim/index.html" class="view-btn">কাহিনীর সূচিপত্র <i class="fa-solid fa-chevron-right"></i></a>
+      </div>
+
+      <div class="prophet-card">
+        <div class="prophet-info">
+          <span class="prophet-no">৪</span>
+          <h3>হযরত মুসা (আঃ)</h3>
+          <p>বনী ইসরাঈলের নবী যাঁর কাছে আসমানি কিতাব তাওরাত নাজিল হয়েছিল।</p>
+        </div>
+        <a href="musa/index.html" class="view-btn">কাহিনীর সূচিপত্র <i class="fa-solid fa-chevron-right"></i></a>
+      </div>
+
+      <div class="prophet-card">
+        <div class="prophet-info">
+          <span class="prophet-no">৫</span>
+          <h3>হযরত ঈসা (আঃ)</h3>
+          <p>আল্লাহর বিশেষ রহমতে কুমারী মারইয়ামের গর্ভে জন্মগ্রহণকারী নবী।</p>
+        </div>
+        <a href="isa/index.html" class="view-btn">কাহিনীর সূচিপত্র <i class="fa-solid fa-chevron-right"></i></a>
+      </div>
+
+      <div class="prophet-card featured">
+        <div class="prophet-info">
+          <span class="prophet-no">৬</span>
+          <h3>হযরত মুহাম্মদ (সাঃ)</h3>
+          <p>সর্বশ্রেষ্ঠ ও সর্বশেষ নবী এবং রাসূল, যাঁর ওপর পবিত্র কুরআন নাজিল হয়েছে।</p>
+        </div>
+        <a href="muhammad/index.html" class="view-btn">কাহিনীর সূচিপত্র <i class="fa-solid fa-chevron-right"></i></a>
+      </div>
+
+    </div>
+  </main>
+
+  <div id="footer"></div>
+
+  <script src="../js/script.js" defer></script>
+  <script>
+    // সাধারণ সার্চ ফাংশনালিটি
+    document.getElementById('prophetSearch').addEventListener('keyup', function() {
+      let filter = this.value.toLowerCase();
+      let cards = document.querySelectorAll('.prophet-card');
+      
+      cards.forEach(card => {
+        let name = card.querySelector('h3').innerText.toLowerCase();
+        if(name.includes(filter)) {
+          card.style.display = "";
+        } else {
+          card.style.display = "none";
+        }
+      });
+    });
+  </script>
+</body>
+</html>
