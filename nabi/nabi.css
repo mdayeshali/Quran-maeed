@@ -1,0 +1,181 @@
+/* File: prophets.css 
+   Project: Islamic Light - Prophets Section
+*/
+
+:root {
+  --bg-light: #f8fafc;
+  --text-main: #1e293b;
+  --text-muted: #64748b;
+  --primary: #004d40;
+  --primary-light: #00796b;
+  --accent: #009688;
+  --white: #ffffff;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+/* ---------- Hero Section ---------- */
+.prophet-hero {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: var(--white);
+  padding: 60px 20px 100px;
+  text-align: center;
+}
+
+.prophet-hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.prophet-hero p {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ---------- Search Bar ---------- */
+.search-container {
+  max-width: 600px;
+  margin: -40px auto 50px;
+  padding: 0 20px;
+  position: relative;
+  z-index: 5;
+}
+
+.search-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-wrapper i {
+  position: absolute;
+  left: 20px;
+  color: var(--primary);
+  font-size: 1.2rem;
+}
+
+.search-wrapper input {
+  width: 100%;
+  padding: 18px 20px 18px 55px;
+  border-radius: 50px;
+  border: none;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  font-size: 1rem;
+  font-family: inherit;
+  outline: none;
+  transition: 0.3s ease;
+}
+
+.search-wrapper input:focus {
+  box-shadow: 0 15px 35px rgba(0, 150, 136, 0.2);
+}
+
+/* ---------- Prophets Grid ---------- */
+.prophet-container {
+  max-width: 1200px;
+  margin: 0 auto 80px;
+  padding: 0 20px;
+}
+
+.prophet-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 30px;
+}
+
+/* ---------- Prophet Card ---------- */
+.prophet-card {
+  background: var(--white);
+  border-radius: 20px;
+  padding: 35px 25px 25px;
+  border: 1px solid #eef2f6;
+  box-shadow: var(--shadow);
+  transition: 0.4s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.prophet-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--accent);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.prophet-info {
+  margin-bottom: 20px;
+}
+
+.prophet-no {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: #e0f2f1;
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 0.8rem;
+  padding: 4px 12px;
+  border-radius: 10px;
+}
+
+.prophet-card h3 {
+  color: var(--primary);
+  font-size: 1.5rem;
+  margin: 15px 0 10px;
+}
+
+.prophet-card p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* Featured Card (e.g. Prophet Muhammad SAW) */
+.prophet-card.featured {
+  border: 2px solid #ffc107;
+}
+
+.prophet-card.featured::after {
+  content: "সর্বশেষ নবী";
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: #fff3e0;
+  color: #e65100;
+  font-size: 0.7rem;
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-weight: bold;
+}
+
+/* View Button */
+.view-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: #f1f5f9;
+  color: var(--primary);
+  text-decoration: none;
+  padding: 12px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: 0.3s;
+}
+
+.prophet-card:hover .view-btn {
+  background: var(--primary);
+  color: var(--white);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+  .prophet-hero { padding: 50px 20px 80px; }
+  .prophet-hero h1 { font-size: 2rem; }
+  .prophet-grid { grid-template-columns: 1fr; }
+  .search-container { margin-top: -30px; }
+}
