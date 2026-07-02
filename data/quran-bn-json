@@ -1,0 +1,80 @@
+[
+{
+  "surah": 1,
+  "name_ar": "الفاتحة",
+  "name_bn": "আল-ফাতিহা",
+  "revelation": "Makki",
+  "total_ayah": 7,
+  "ayahs": [
+    {
+      "ayah": 1,
+      "juz": 1,
+      "ruku": 1,
+      "hizb": 1,
+      "manzil": 1,
+      "page": 1,
+      "sajdah": false,
+      "translation_bn": "পরম করুণাময়, অসীম দয়ালু আল্লাহর নামে শুরু করছি।"
+    },
+    {
+      "ayah": 2,
+      "juz": 1,
+      "ruku": 1,
+      "hizb": 1,
+      "manzil": 1,
+      "page": 1,
+      "sajdah": false,
+      "translation_bn": "সকল প্রশংসা একমাত্র আল্লাহর, যিনি সমগ্র সৃষ্টিজগতের প্রতিপালক।"
+    },
+    {
+      "ayah": 3,
+      "juz": 1,
+      "ruku": 1,
+      "hizb": 1,
+      "manzil": 1,
+      "page": 1,
+      "sajdah": false,
+      "translation_bn": "তিনি পরম করুণাময়, অসীম দয়ালু।"
+    },
+    {
+      "ayah": 4,
+      "juz": 1,
+      "ruku": 1,
+      "hizb": 1,
+      "manzil": 1,
+      "page": 1,
+      "sajdah": false,
+      "translation_bn": "তিনি প্রতিদান দিবসের সর্বময় অধিপতি।"
+    },
+    {
+      "ayah": 5,
+      "juz": 1,
+      "ruku": 1,
+      "hizb": 1,
+      "manzil": 1,
+      "page": 1,
+      "sajdah": false,
+      "translation_bn": "আমরা কেবল আপনারই ইবাদত করি এবং একমাত্র আপনারই সাহায্য প্রার্থনা করি।"
+    },
+    {
+      "ayah": 6,
+      "juz": 1,
+      "ruku": 1,
+      "hizb": 1,
+      "manzil": 1,
+      "page": 1,
+      "sajdah": false,
+      "translation_bn": "আমাদেরকে সরল ও সঠিক পথের দিশা দিন।"
+    },
+    {
+      "ayah": 7,
+      "juz": 1,
+      "ruku": 1,
+      "hizb": 1,
+      "manzil": 1,
+      "page": 1,
+      "sajdah": false,
+      "translation_bn": "সেইসব মানুষের পথ, যাদের প্রতি আপনি অনুগ্রহ করেছেন; তাদের পথ নয়, যারা আপনার ক্রোধের সম্মুখীন হয়েছে এবং নয় তাদের পথ, যারা সত্যপথ থেকে বিচ্যুত হয়েছে।"
+    }
+  ]
+}]
