@@ -3,39 +3,59 @@ document.addEventListener('DOMContentLoaded', () => {
     const surahInfo = document.getElementById('surah-info');
     const ayahList = document.getElementById('ayah-list');
     
-    // ডোমেইন বা লোকাল পাথ অনুযায়ী পরিবর্তন করে নিতে পারেন
-    const BN_JSON_PATH = 'data/quran-bn.json'; 
-    const AR_JSON_PATH = 'https://cdn.jsdelivr.net/gh/fawazahmed0/quran-api@1/editions/ara-quranic.json'; // উদাহরণ হিসেবে একটি পাবলিক ডোমেইন আরবি API
+    // GitHub Pages-এর জন্য রিলেটিভ পাথ নিশ্চিত করা হলো
+    const BN_JSON_PATH = './data/quran-bn.json'; 
+    const AR_JSON_PATH = 'https://cdn.jsdelivr.net/gh/fawazahmed0/quran-api@1/editions/ara-quranic.json'; 
 
     let quranBanglaData = [];
     let quranArabicData = [];
 
-    // ডেটা লোড করার ফাংশন
+    // ডেটা লোড করার আপডেট করা ফাংশন
     async function loadQuranData() {
         try {
-            // দুটি জেসন ফাইল একসাথে লোড করা হচ্ছে
-            const [resBn, resAr] = await Promise.all([
-                fetch(BN_JSON_PATH),
-                fetch(AR_JSON_PATH)
-            ]);
-
+            // ১. প্রথমে আপনার লোকাল বাংলা জেসন ডেটা লোড করার চেষ্টা করি
+            const resBn = await fetch(BN_JSON_PATH);
+            if (!resBn.ok) {
+                throw new Error(`বাংলা জেসন ফাইল পাওয়া যায়নি! স্ট্যাটাস: ${resBn.status}`);
+            }
             quranBanglaData = await resBn.json();
-            const arDataRaw = await resAr.json();
-            
-            // পাবলিক জেসন স্ট্রাকচার অনুযায়ী ডেটা প্রসেস (যদি প্রয়োজন হয়)
-            // এখানে সাধারণ এরে ফরম্যাট ধরে নেওয়া হয়েছে
-            quranArabicData = arDataRaw.quran || arDataRaw; 
 
-            // ড্রপডাউনে সূরাগুলোর নাম যোগ করা
+            // ২. বাংলা ডেটা সফলভাবে লোড হলে সূরার লিস্ট ড্রপডাউনে পাঠিয়ে দেওয়া হবে
             initSurahSelect();
+
+            // ৩. এবার ব্যাকগ্রাউন্ডে এক্সটার্নাল আরবি ডেটা লোড করার চেষ্টা করি
+            try {
+                const resAr = await fetch(AR_JSON_PATH);
+                if (resAr.ok) {
+                    const arDataRaw = await resAr.json();
+                    quranArabicData = arDataRaw.quran || arDataRaw;
+                    console.log('আরবি ডেটা সফলভাবে ব্যাকগ্রাউন্ডে লোড হয়েছে।');
+                } else {
+                    console.warn('আরবি API থেকে রেসপন্স পাওয়া যায়নি, তবে বাংলা ডেটা প্রস্তুত।');
+                }
+            } catch (arError) {
+                // আরবি এপিআই ফেইল করলেও অ্যাপ যেন ক্র্যাশ না করে
+                console.error('আরবি ডেটা নেটওয়ার্ক বা অন্য সমস্যার কারণে লোড করা যায়নি:', arError);
+            }
+
         } catch (error) {
-            console.error('ডেটা লোড করতে সমস্যা হয়েছে:', error);
-            ayahList.innerHTML = '<div class="welcome-msg" style="color:red;">কুরআন ডেটা লোড করতে ব্যর্থ হয়েছে। দয়া করে পাথ চেক করুন।</div>';
+            // যদি মূল বাংলা জেসন ফাইলটিই রিড করতে না পারে তবে এই এরর দেখাবে
+            console.error('মূল ডেটা লোড করতে সমস্যা হয়েছে:', error);
+            ayahList.innerHTML = `
+                <div class="welcome-msg" style="color:#d32f2f; font-weight:600;">
+                    কুরআন ডেটা লোড করতে ব্যর্থ হয়েছে!<br>
+                    <span style="font-size:14px; color:#777; font-weight:normal;">
+                        দয়া করে নিশ্চিত করুন আপনার ফোল্ডারের নাম 'data' এবং ফাইলের নাম 'quran-bn.json' হুবহু ছোট হাতের অক্ষরে আছে কি না।
+                    </span>
+                </div>`;
         }
     }
 
     // ড্রপডাউন পপুলেট করা
     function initSurahSelect() {
+        // আগের অপশনগুলো সাফ করে শুধু ডিফল্টটি রাখা
+        surahSelect.innerHTML = '<option value="">সূরা নির্বাচন করুন...</option>';
+        
         quranBanglaData.forEach(surah => {
             const option = document.createElement('option');
             option.value = surah.surah;
@@ -80,21 +100,27 @@ document.addEventListener('DOMContentLoaded', () => {
         ayahList.innerHTML = ''; // আগের আয়াত মুছে ফেলা
 
         // আয়াতগুলো লুপ করে তৈরি করা
-        surah.ayahs.forEach((ayahBn, index) => {
+        surah.ayahs.forEach((ayahBn) => {
             const ayahCard = document.createElement('div');
             ayahCard.className = 'ayah-card';
 
-            // পাবলিক আরবি জেসন থেকে সংশ্লিষ্ট আয়াতটি খুঁজে বের করার লজিক 
-            // (আপনার সংগৃহীত আরবি জেসনের স্ট্রাকচার ভেদে এই ফিল্টারিং সামান্য বদলাতে পারে)
-            let arabicText = 'আরবি টেক্সট পাওয়া যায়নি';
+            // আরবি জেসন স্ট্রাকচার চেক করে আয়াত ম্যাচ করার লজিক
+            let arabicText = '';
             
-            if (quranArabicData && quranArabicData[surah.surah]) {
-                // উদাহরণ: যদি জেসন অবজেক্ট ভিত্তিক হয়
-                arabicText = quranArabicData[surah.surah][ayahBn.ayah] || '';
-            } else {
-                // বিকল্প বা ব্যাকআপ (অথবা আপনার ডেকোরেশন অনুযায়ী ডাইরেক্ট ইমপোর্ট)
-                // এখানে ডামি হিসেবে বা আপনার নিজের আরবি ফাইল স্ট্রাকচার বসিয়ে নিতে পারেন
-                arabicText = `এখানে সূরা ${surah.surah}, আয়াত ${ayahBn.ayah}-এর আরবি টেক্সট বসবে।`;
+            if (quranArabicData && quranArabicData.length > 0) {
+                // যদি আরবি ডেটা একটি ফ্ল্যাট বা সাধারণ অ্যারে হয়, তবে সুরা এবং আয়াত নম্বর দিয়ে খোঁজা
+                const matchedArabic = quranArabicData.find(a => a.surah === surah.surah && a.ayah === ayahBn.ayah);
+                if (matchedArabic) {
+                    arabicText = matchedArabic.text;
+                } else if (quranArabicData[surah.surah] && quranArabicData[surah.surah][ayahBn.ayah]) {
+                    // বিকল্প অবজেক্ট ফরম্যাট স্ট্রাকচার হলে
+                    arabicText = quranArabicData[surah.surah][ayahBn.ayah];
+                }
+            }
+
+            // যদি কোনো কারণে আরবি টেক্সট না পাওয়া যায় তবে সুন্দর একটি মেসেজ সেট করা
+            if (!arabicText) {
+                arabicText = '⚠️ আরবি টেক্সট লোড হচ্ছে বা পাওয়া যায়নি';
             }
 
             ayahCard.innerHTML = `
@@ -113,4 +139,3 @@ document.addEventListener('DOMContentLoaded', () => {
     // শুরুতে ডেটা লোড কল করা
     loadQuranData();
 });
-
