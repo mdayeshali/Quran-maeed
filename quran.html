@@ -1,1 +1,47 @@
-rhbf
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>আল-কুরআন (বাংলা অনুবাদসহ)</title>
+    <link rel="stylesheet" href="css/quran.css">
+    <!-- ফন্ট এবং আইকনের জন্য (ঐচ্ছিক কিন্তু সুন্দর দেখাবে) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="quran-header">
+        <div class="header-container">
+            <h1>আল-কুরআন</h1>
+            <div class="selector-box">
+                <select id="surah-select">
+                    <option value="">সূরা নির্বাচন করুন...</option>
+                </select>
+            </div>
+        </div>
+    </header>
+
+    <main class="quran-container">
+        <!-- সূরার সাধারণ তথ্য এখানে দেখাবে -->
+        <div id="surah-info" class="surah-info hidden">
+            <h2 id="surah-title-bn"></h2>
+            <p id="surah-title-ar" class="arabic-title"></p>
+            <div class="meta-details">
+                <span id="surah-revelation"></span>
+                <span id="surah-total-ayah"></span>
+            </div>
+            <div class="bismillah" id="bismillah-text">বِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+        </div>
+
+        <!-- আয়াতগুলো লোড হবে এখানে -->
+        <div id="ayah-list" class="ayah-list">
+            <div class="welcome-msg">দয়া করে পড়ার জন্য একটি সূরা নির্বাচন করুন।</div>
+        </div>
+    </main>
+
+    <script src="js/quran.js"></script>
+</body>
+</html>
+
