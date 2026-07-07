@@ -1,1 +1,198 @@
-ghh
+/* গ্লোবাল স্টাইল এবং ভেরিয়েবল */
+:root {
+    --bg-color: #f7f9f6;
+    --card-bg: #ffffff;
+    --primary-color: #1b4d3e; /* ডিপ ইসলামিক গ্রীন */
+    --accent-color: #2e7d32;
+    --text-dark: #2c3e50;
+    --text-muted: #7f8c8d;
+    --border-color: #e0e6ed;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Hind Siliguri', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-dark);
+    line-height: 1.6;
+}
+
+/* হেডার স্টাইল */
+.quran-header {
+    background-color: var(--card-bg);
+    border-bottom: 3px solid var(--primary-color);
+    padding: 20px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.header-container {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.quran-header h1 {
+    color: var(--primary-color);
+    font-size: 24px;
+    font-weight: 700;
+}
+
+/* ড্রপডাউন সিলেক্টর */
+#surah-select {
+    padding: 10px 15px;
+    font-family: 'Hind Siliguri', sans-serif;
+    font-size: 16px;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    outline: none;
+    color: var(--text-dark);
+    background-color: var(--card-bg);
+    cursor: pointer;
+    transition: border-color 0.3s;
+}
+
+#surah-select:focus {
+    border-color: var(--primary-color);
+}
+
+/* মেইন কন্টেইনার */
+.quran-container {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+/* সূরার মেটা ইনফো কার্ড */
+.surah-info {
+    background: var(--card-bg);
+    padding: 25px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    margin-bottom: 25px;
+    border: 1px solid var(--border-color);
+}
+
+.surah-info h2 {
+    color: var(--primary-color);
+    font-size: 26px;
+    margin-bottom: 5px;
+}
+
+.arabic-title {
+    font-family: 'Amiri', serif;
+    font-size: 28px;
+    color: var(--accent-color);
+    margin-bottom: 15px;
+}
+
+.meta-details {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 15px;
+}
+
+.meta-details span {
+    background: #edf4f0;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin: 0 5px;
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.bismillah {
+    font-family: 'Amiri', serif;
+    font-size: 28px;
+    color: var(--text-dark);
+    margin-top: 15px;
+    border-top: 1px dashed var(--border-color);
+    padding-top: 15px;
+}
+
+/* আয়াত কার্ড স্টাইল */
+.ayah-card {
+    background: var(--card-bg);
+    padding: 25px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    border: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* বাম পাশে সুন্দর গোল বক্সে সিরিয়াল নম্বর */
+.ayah-number {
+    align-self: flex-start; /* বাম দিকে অ্যালাইন */
+    background-color: #edf4f0;
+    color: var(--primary-color);
+    font-weight: 700;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 14px;
+    border: 1px solid rgba(27, 77, 62, 0.2);
+}
+
+/* আরবি টেক্সট ডান পাশে */
+.arabic-text {
+    font-family: 'Amiri', serif;
+    font-size: 30px;
+    text-align: right;
+    direction: rtl;
+    line-height: 1.8;
+    color: #111;
+    word-spacing: 4px;
+}
+
+/* বাংলা অনুবাদ বাম পাশে */
+.bangla-text {
+    font-size: 17px;
+    color: var(--text-dark);
+    text-align: left;
+    line-height: 1.7;
+    border-top: 1px solid #f1f5f9;
+    padding-top: 12px;
+}
+
+.welcome-msg {
+    text-align: center;
+    padding: 40px;
+    color: var(--text-muted);
+    font-size: 18px;
+}
+
+.hidden {
+    display: none;
+}
+
+/* মোবাইল রেসপন্সিভনেস */
+@media (max-width: 600px) {
+    .header-container {
+        flex-direction: column;
+        gap: 15px;
+    }
+    .arabic-text {
+        font-size: 26px;
+    }
+    .bangla-text {
+        font-size: 15px;
+    }
+  }
+
