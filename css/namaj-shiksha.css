@@ -1,5 +1,567 @@
- :root{--g:#004d40;--g2:#00796b;--soft:#e8f5f2;--ink:#17332e;--muted:#60736e;--line:#d7e5e1;--bg:#f5f9f8}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans Bengali",sans-serif;line-height:1.9}
-.namaj-page{max-width:1250px;margin:auto;padding:18px 16px 60px}.hero{background:linear-gradient(135deg,#003c33,#00796b);color:#fff;border-radius:26px;padding:52px 25px;text-align:center;box-shadow:0 14px 38px #003c3322}.hero-icon{font-size:50px}.eyebrow{font-size:12px;letter-spacing:2px;opacity:.8}.hero h1{font-size:clamp(32px,5vw,52px);margin:4px 0}.hero p{max-width:720px;margin:0 auto 22px}.hero-actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}.btn{display:inline-flex;align-items:center;gap:8px;text-decoration:none;border-radius:999px;padding:10px 18px;font-weight:700}.btn.primary{background:#fff;color:var(--g)}.btn.ghost{color:#fff;border:1px solid #ffffff66}.layout{display:grid;grid-template-columns:245px 1fr;gap:22px;margin-top:22px}.toc{position:sticky;top:12px;align-self:start;background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px;max-height:calc(100vh - 24px);overflow:auto}.toc-title{font-weight:800;color:var(--g);padding:8px}.toc a{display:block;text-decoration:none;color:var(--ink);padding:8px 10px;border-radius:9px;font-size:14px}.toc a:hover{background:var(--soft);color:var(--g)}.content{min-width:0}.card{background:#fff;border:1px solid var(--line);border-radius:19px;padding:25px;margin-bottom:20px}.quick-card{display:flex;align-items:center;justify-content:space-between;gap:20px;background:linear-gradient(120deg,#fff,#eff8f5)}.label{color:var(--g2);font-size:13px;font-weight:700}.quick-card h2{margin:4px 0}.section-title{color:var(--g);font-size:clamp(23px,3vw,30px);margin:0 0 12px}.lead{color:var(--muted)}.evidence-grid,.number-grid,.dua-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}.evidence-grid>div,.number-grid>div{border:1px solid var(--line);border-radius:14px;padding:16px;background:#fbfdfc}.evidence-grid b,.number-grid strong{color:var(--g)}.number-grid h3{margin:5px 0}.check-list{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.check-list div{background:var(--soft);border-radius:10px;padding:11px 13px}.pillars{display:flex;gap:9px;flex-wrap:wrap}.pillars span{background:var(--soft);border:1px solid #c9e1dc;border-radius:999px;padding:6px 12px}.step{display:grid;grid-template-columns:52px 1fr;gap:14px;border:1px solid var(--line);border-radius:16px;margin:15px 0;overflow:hidden}.step-no{background:var(--soft);color:var(--g);font-size:23px;font-weight:800;text-align:center;padding-top:18px}.step-content{padding:18px}.step-content h3{margin:0;color:var(--g);font-size:21px}.arabic-box{background:#fbf8ef;border:1px solid #e7dcb8;border-radius:14px;padding:16px;margin:13px 0}.arabic{font-family:"Amiri",serif;font-size:30px;line-height:2;text-align:right;direction:rtl}.translit{font-weight:600;margin-top:8px}.meaning{color:#4e5d59;margin-top:7px}.ref{font-size:13px;color:#667570;background:#f7faf9;border-radius:8px;padding:7px 10px}.tip{background:#eef8f5;border-left:4px solid var(--g2);padding:12px 14px;border-radius:8px;margin-top:12px}.flow,.timeline{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.flow span,.timeline span{background:var(--soft);border:1px solid #cbe1dc;border-radius:999px;padding:7px 12px}.flow b,.timeline i{color:var(--g2)}.rakah-detail{background:#fbfdfc;border:1px solid var(--line);border-radius:14px;padding:15px;margin-top:15px}.rakah-detail h3{color:var(--g);margin-bottom:4px}.mini{border:1px solid var(--line);border-radius:14px;padding:15px;background:#fbfdfc}.mini h3{margin:0;color:var(--g)}.mini .arabic{font-size:25px}.mini button{border:0;background:var(--g);color:#fff;border-radius:8px;padding:6px 10px;cursor:pointer;margin-top:8px}.mistakes{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.mistakes div{padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:#fbfdfc}details{border:1px solid var(--line);border-radius:11px;margin:9px 0;padding:12px 14px}summary{cursor:pointer;font-weight:700;color:var(--g)}.final-note{text-align:center;background:var(--soft);border:1px solid #cbe1dc;border-radius:19px;padding:25px}.final-note h2{color:var(--g)}
-@media(max-width:900px){.layout{grid-template-columns:1fr}.toc{position:relative;top:auto;max-height:none;display:flex;gap:6px;overflow:auto}.toc-title{display:none}.toc a{white-space:nowrap}.evidence-grid,.number-grid{grid-template-columns:repeat(2,1fr)}.dua-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:600px){.namaj-page{padding:9px 9px 40px}.hero{padding:36px 17px;border-radius:20px}.card{padding:17px;border-radius:15px}.quick-card{display:block}.quick-card .btn{margin-top:10px}.evidence-grid,.number-grid,.check-list,.mistakes,.dua-grid{grid-template-columns:1fr}.step{grid-template-columns:38px 1fr}.step-content{padding:13px}.arabic{font-size:25px}.flow span,.timeline span{font-size:13px;padding:5px 9px}.section-title{font-size:24px}}
+/* =========================================
+   Islamic Light - Namaj Section
+   ========================================= */
+
+:root {
+    --namaj-primary: #004d40;
+    --namaj-primary-light: #00695c;
+    --namaj-secondary: #e8f5e9;
+    --namaj-accent: #2e7d32;
+    --namaj-text: #263238;
+    --namaj-muted: #607d8b;
+    --namaj-bg: #f7faf8;
+    --namaj-white: #ffffff;
+    --namaj-border: #dce7e2;
+    --namaj-shadow: 0 4px 15px rgba(0, 77, 64, 0.08);
+    --namaj-radius: 14px;
+}
+
+/* =========================================
+   Main Container
+   ========================================= */
+
+.namaj-container {
+    width: min(1200px, 92%);
+    margin: 0 auto;
+    padding: 25px 0 50px;
+}
+
+/* =========================================
+   Breadcrumb
+   ========================================= */
+
+.namaj-breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: var(--namaj-muted);
+}
+
+.namaj-breadcrumb a {
+    color: var(--namaj-primary);
+    text-decoration: none;
+}
+
+.namaj-breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+/* =========================================
+   Hero
+   ========================================= */
+
+.namaj-hero {
+    background: linear-gradient(
+        135deg,
+        var(--namaj-primary),
+        var(--namaj-primary-light)
+    );
+    color: var(--namaj-white);
+    border-radius: var(--namaj-radius);
+    padding: 45px 30px;
+    text-align: center;
+    margin-bottom: 35px;
+    box-shadow: var(--namaj-shadow);
+}
+
+.namaj-hero h1 {
+    margin: 0 0 12px;
+    font-size: clamp(28px, 5vw, 42px);
+    line-height: 1.3;
+}
+
+.namaj-hero p {
+    max-width: 750px;
+    margin: 0 auto 25px;
+    font-size: 17px;
+    line-height: 1.8;
+}
+
+.namaj-hero-buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+/* =========================================
+   Buttons
+   ========================================= */
+
+.namaj-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.25s ease;
+}
+
+.namaj-btn-primary {
+    background: var(--namaj-white);
+    color: var(--namaj-primary);
+}
+
+.namaj-btn-primary:hover {
+    transform: translateY(-2px);
+}
+
+.namaj-btn-outline {
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    color: var(--namaj-white);
+}
+
+.namaj-btn-outline:hover {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+/* =========================================
+   Section
+   ========================================= */
+
+.namaj-section {
+    margin-bottom: 40px;
+}
+
+.namaj-section-title {
+    text-align: center;
+    margin-bottom: 22px;
+}
+
+.namaj-section-title h2 {
+    margin: 0 0 8px;
+    color: var(--namaj-primary);
+    font-size: clamp(23px, 4vw, 30px);
+}
+
+.namaj-section-title p {
+    margin: 0;
+    color: var(--namaj-muted);
+    line-height: 1.7;
+}
+
+/* =========================================
+   Cards Grid
+   ========================================= */
+
+.namaj-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.namaj-card {
+    background: var(--namaj-white);
+    border: 1px solid var(--namaj-border);
+    border-radius: var(--namaj-radius);
+    padding: 24px 20px;
+    box-shadow: var(--namaj-shadow);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.namaj-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 22px rgba(0, 77, 64, 0.12);
+}
+
+.namaj-card-icon {
+    width: 52px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    border-radius: 50%;
+    background: var(--namaj-secondary);
+    color: var(--namaj-primary);
+    font-size: 24px;
+}
+
+.namaj-card h3 {
+    margin: 0 0 9px;
+    color: var(--namaj-text);
+    font-size: 20px;
+}
+
+.namaj-card p {
+    margin: 0 0 15px;
+    color: var(--namaj-muted);
+    line-height: 1.7;
+    font-size: 15px;
+}
+
+.namaj-card-link {
+    display: inline-block;
+    color: var(--namaj-primary);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.namaj-card-link:hover {
+    text-decoration: underline;
+}
+
+/* =========================================
+   Five Daily Prayers
+   ========================================= */
+
+.namaj-prayer-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 14px;
+}
+
+.namaj-prayer-card {
+    display: block;
+    background: var(--namaj-white);
+    border: 1px solid var(--namaj-border);
+    border-radius: var(--namaj-radius);
+    padding: 22px 15px;
+    text-align: center;
+    color: var(--namaj-text);
+    text-decoration: none;
+    box-shadow: var(--namaj-shadow);
+    transition: 0.25s ease;
+}
+
+.namaj-prayer-card:hover {
+    color: var(--namaj-primary);
+    transform: translateY(-3px);
+}
+
+.namaj-prayer-card h3 {
+    margin: 0 0 7px;
+}
+
+.namaj-prayer-card p {
+    margin: 0;
+    color: var(--namaj-muted);
+    font-size: 14px;
+}
+
+/* =========================================
+   Featured Box
+   ========================================= */
+
+.namaj-featured {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    align-items: center;
+    background: var(--namaj-secondary);
+    border-radius: var(--namaj-radius);
+    padding: 30px;
+}
+
+.namaj-featured h2 {
+    margin-top: 0;
+    color: var(--namaj-primary);
+}
+
+.namaj-featured p {
+    line-height: 1.8;
+    color: var(--namaj-text);
+}
+
+.namaj-featured-list {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.namaj-featured-list li {
+    margin-bottom: 9px;
+    line-height: 1.7;
+}
+
+/* =========================================
+   Alert / Important Box
+   ========================================= */
+
+.namaj-important {
+    background: #fff8e1;
+    border-left: 4px solid #ffb300;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 25px 0;
+}
+
+.namaj-important h3 {
+    margin-top: 0;
+    color: #6d4c00;
+}
+
+.namaj-important p {
+    margin-bottom: 0;
+    line-height: 1.8;
+}
+
+/* =========================================
+   Article Content
+   ========================================= */
+
+.namaj-content {
+    background: var(--namaj-white);
+    border: 1px solid var(--namaj-border);
+    border-radius: var(--namaj-radius);
+    padding: 30px;
+    box-shadow: var(--namaj-shadow);
+}
+
+.namaj-content h2 {
+    color: var(--namaj-primary);
+    margin-top: 30px;
+}
+
+.namaj-content h2:first-child {
+    margin-top: 0;
+}
+
+.namaj-content h3 {
+    color: var(--namaj-primary-light);
+}
+
+.namaj-content p {
+    line-height: 1.9;
+    color: var(--namaj-text);
+}
+
+.namaj-content ul,
+.namaj-content ol {
+    line-height: 1.9;
+    color: var(--namaj-text);
+}
+
+.namaj-content li {
+    margin-bottom: 7px;
+}
+
+/* =========================================
+   Arabic Text
+   ========================================= */
+
+.namaj-arabic {
+    direction: rtl;
+    text-align: right;
+    font-family: "Noto Naskh Arabic", "Amiri", serif;
+    font-size: 28px;
+    line-height: 2.1;
+    background: #fafdfb;
+    border: 1px solid var(--namaj-border);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 18px 0;
+}
+
+/* =========================================
+   Bangla Pronunciation
+   ========================================= */
+
+.namaj-pronunciation {
+    background: #f5f7f6;
+    border-left: 4px solid var(--namaj-primary);
+    padding: 16px 18px;
+    margin: 15px 0;
+    border-radius: 7px;
+    line-height: 1.9;
+}
+
+/* =========================================
+   Translation
+   ========================================= */
+
+.namaj-translation {
+    background: #f8fbfa;
+    padding: 16px 18px;
+    border-radius: 8px;
+    line-height: 1.9;
+    color: var(--namaj-text);
+}
+
+/* =========================================
+   Step-by-Step
+   ========================================= */
+
+.namaj-steps {
+    counter-reset: namaj-step;
+    display: grid;
+    gap: 16px;
+}
+
+.namaj-step {
+    position: relative;
+    padding: 20px 20px 20px 68px;
+    background: var(--namaj-white);
+    border: 1px solid var(--namaj-border);
+    border-radius: 12px;
+    box-shadow: var(--namaj-shadow);
+}
+
+.namaj-step::before {
+    counter-increment: namaj-step;
+    content: counter(namaj-step);
+    position: absolute;
+    left: 18px;
+    top: 18px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--namaj-primary);
+    color: var(--namaj-white);
+    border-radius: 50%;
+    font-weight: 700;
+}
+
+.namaj-step h3 {
+    margin: 0 0 8px;
+    color: var(--namaj-primary);
+}
+
+.namaj-step p {
+    margin: 0;
+    line-height: 1.8;
+}
+
+/* =========================================
+   Table
+   ========================================= */
+
+.namaj-table-wrapper {
+    overflow-x: auto;
+    margin: 20px 0;
+}
+
+.namaj-table {
+    width: 100%;
+    min-width: 600px;
+    border-collapse: collapse;
+    background: var(--namaj-white);
+}
+
+.namaj-table th,
+.namaj-table td {
+    padding: 13px 15px;
+    border: 1px solid var(--namaj-border);
+    text-align: left;
+}
+
+.namaj-table th {
+    background: var(--namaj-secondary);
+    color: var(--namaj-primary);
+}
+
+/* =========================================
+   Page Navigation
+   ========================================= */
+
+.namaj-page-nav {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-top: 35px;
+}
+
+.namaj-page-nav a {
+    flex: 1;
+    padding: 14px 18px;
+    border-radius: 9px;
+    background: var(--namaj-secondary);
+    color: var(--namaj-primary);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.namaj-page-nav a:last-child {
+    text-align: right;
+}
+
+/* =========================================
+   Responsive
+   ========================================= */
+
+@media (max-width: 900px) {
+    .namaj-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .namaj-prayer-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .namaj-featured {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .namaj-container {
+        width: 94%;
+        padding-top: 18px;
+    }
+
+    .namaj-hero {
+        padding: 32px 18px;
+    }
+
+    .namaj-hero p {
+        font-size: 15px;
+    }
+
+    .namaj-hero-buttons {
+        flex-direction: column;
+    }
+
+    .namaj-btn {
+        width: 100%;
+    }
+
+    .namaj-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .namaj-prayer-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .namaj-card {
+        padding: 20px 17px;
+    }
+
+    .namaj-featured {
+        padding: 22px 18px;
+    }
+
+    .namaj-content {
+        padding: 20px 16px;
+    }
+
+    .namaj-arabic {
+        font-size: 24px;
+        padding: 15px;
+    }
+
+    .namaj-step {
+        padding: 18px 15px 18px 60px;
+    }
+
+    .namaj-page-nav {
+        flex-direction: column;
+    }
+
+    .namaj-page-nav a:last-child {
+        text-align: left;
+    }
+}
+
+@media (max-width: 380px) {
+    .namaj-prayer-grid {
+        grid-template-columns: 1fr;
+    }
+}
