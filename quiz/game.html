@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ইলম কোয়েস্ট - ইসলামিক কুইজ গেম</title>
+  
+  <!-- Fonts: DIN Rounded / Nunito / Hind Siliguri vibes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@500;600;700&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/game.css">
+</head>
+<body class="duo-body">
+
+  <div id="header"></div>
+
+  <div class="duo-screen-container">
+    <div class="duo-app-wrapper">
+      
+      <!-- Duolingo Top Header HUD -->
+      <header class="duo-hud">
+        <button type="button" class="duo-icon-btn" id="exitQuizBtn" style="display: none;" title="বেরিয়ে যান">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+
+        <div class="duo-stats-group" id="mainStatsGroup">
+          <!-- Streak -->
+          <div class="stat-pill streak-pill">
+            <i class="fa-solid fa-fire-flame-curved"></i>
+            <span id="streakCount">৩</span>
+          </div>
+          <!-- Gems / Coins -->
+          <div class="stat-pill gem-pill">
+            <i class="fa-solid fa-gem"></i>
+            <span id="totalCoinsDisplay">০</span>
+          </div>
+          <!-- Hearts / Lives -->
+          <div class="stat-pill heart-pill">
+            <i class="fa-solid fa-heart"></i>
+            <span id="heartsDisplay">৫</span>
+          </div>
+        </div>
+
+        <button type="button" class="duo-icon-btn" id="soundToggleBtn" title="সাউন্ড চালু/বন্ধ">
+          <i class="fa-solid fa-volume-high" id="soundIcon"></i>
+        </button>
+      </header>
+
+      <!-- VIEW 1: DUOLINGO S-SHAPED ROADMAP PATH -->
+      <main class="duo-view" id="pathwayView">
+        
+        <!-- Unit Banner: World 1 -->
+        <div class="unit-banner unit-1">
+          <div class="unit-text">
+            <span class="unit-tag">অধ্যায় ১</span>
+            <h3>ঈমান ও প্রাথমিক আমল</h3>
+          </div>
+          <div class="unit-trophy">
+            <i class="fa-solid fa-book-open"></i>
+          </div>
+        </div>
+
+        <!-- S-Curved Path Roadmap for Levels 1 to 5 -->
+        <div class="duo-path" id="worldOnePath">
+          <!-- JS will inject nodes here -->
+        </div>
+
+        <!-- Unit Banner: World 2 (লেভেল ৬ থেকে কালার প্যালেট চেইঞ্জ) -->
+        <div class="unit-banner unit-2">
+          <div class="unit-text">
+            <span class="unit-tag">অধ্যায় ২</span>
+            <h3>সাহাবিদের আদর্শ ও ইতিহাস</h3>
+          </div>
+          <div class="unit-trophy">
+            <i class="fa-solid fa-mosque"></i>
+          </div>
+        </div>
+
+        <!-- Roadmap for Levels 6 to 10 -->
+        <div class="duo-path" id="worldTwoPath">
+          <!-- JS will inject nodes here -->
+        </div>
+
+      </main>
+
+      <!-- VIEW 2: QUIZ PLAY SCREEN (DUOLINGO CARD PLAY) -->
+      <main class="duo-view" id="quizPlayView" style="display: none;">
+        
+        <!-- Duolingo Top Progress Bar -->
+        <div class="quiz-top-progress">
+          <div class="duo-progress-track">
+            <div class="duo-progress-fill" id="progressBar"></div>
+          </div>
+        </div>
+
+        <!-- Quiz Interaction Area -->
+        <div class="quiz-content-area">
+          <div class="mascot-speech-bubble">
+            <div class="speech-bubble">
+              <h2 id="questionText">সঠিক উত্তর নির্বাচন করুন:</h2>
+            </div>
+          </div>
+
+          <div class="duo-options-list" id="optionsContainer">
+            <!-- 3D Pressable Option Buttons -->
+          </div>
+        </div>
+
+        <!-- Duolingo Bottom Feedback Sheet -->
+        <footer class="duo-bottom-sheet" id="bottomSheet">
+          <div class="sheet-content">
+            <div class="sheet-status-info">
+              <div class="sheet-icon" id="sheetIcon">
+                <i class="fa-solid fa-check"></i>
+              </div>
+              <div class="sheet-text">
+                <strong id="sheetTitle">অসাধারণ!</strong>
+                <p id="sheetExplanation"></p>
+              </div>
+            </div>
+            <button type="button" class="duo-action-btn" id="nextQuestionBtn">
+              চালিয়ে যান
+            </button>
+          </div>
+        </footer>
+      </main>
+
+      <!-- VIEW 3: LEVEL COMPLETE CELEBRATION -->
+      <main class="duo-view" id="quizResultView" style="display: none;">
+        <div class="duo-result-card">
+          <div class="celebration-badge">
+            <i class="fa-solid fa-trophy"></i>
+          </div>
+          
+          <h2 id="resultTitle">পাঠ সম্পন্ন!</h2>
+          <p id="resultSubtitle">মাশাআল্লাহ! আপনি দারুণ করেছেন।</p>
+
+          <div class="duo-rewards-grid">
+            <div class="reward-card">
+              <span class="reward-label">সঠিক উত্তর</span>
+              <strong id="correctScoreText">৫ / ৫</strong>
+            </div>
+            <div class="reward-card highlight">
+              <span class="reward-label">অর্জিত জেমস</span>
+              <strong id="earnedCoinsText">+২৫</strong>
+            </div>
+          </div>
+
+          <div class="result-btn-stack">
+            <button type="button" class="duo-action-btn primary" id="continuePathBtn">
+              পথচলা অব্যাহত রাখুন
+            </button>
+            <button type="button" class="duo-action-btn secondary" id="retryLevelBtn">
+              আবার অনুশীলন করুন
+            </button>
+          </div>
+        </div>
+      </main>
+
+    </div>
+  </div>
+
+  <div id="footer"></div>
+
+  <script src="../js/script.js"></script>
+  <script src="../js/game.js" defer></script>
+</body>
+  </html>
+  
