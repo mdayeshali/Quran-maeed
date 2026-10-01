@@ -1,64 +1,98 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-   
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>আল-কুরআন (বাংলা অনুবাদসহ)</title>
-    <link rel="stylesheet" href="css/quran.css">
-    <!-- ফন্ট এবং আইকনের জন্য (ঐচ্ছিক কিন্তু সুন্দর দেখাবে) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>প্রজেক্ট হোম | কুরআন অ্যাপ</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background-color: #f1f5f9;
+      color: #334155;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 1rem;
+    }
+    .card {
+      background: #ffffff;
+      padding: 2.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
+    }
+    h1 {
+      color: #065f46;
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+    }
+    p {
+      color: #64748b;
+      margin-bottom: 2rem;
+      font-size: 0.95rem;
+    }
+    .btn-link {
+      display: inline-block;
+      width: 100%;
+      padding: 0.85rem 1.5rem;
+      background-color: #059669;
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 600;
+      border-radius: 8px;
+      transition: background-color 0.2s ease;
+      font-size: 1.05rem;
+    }
+    .btn-link:hover {
+      background-color: #047857;
+    }
+    .path-checklist {
+      margin-top: 2rem;
+      text-align: left;
+      background: #f8fafc;
+      padding: 1rem;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+      font-size: 0.85rem;
+      color: #475569;
+    }
+    .path-checklist code {
+      color: #0f766e;
+      background: #e6fffa;
+      padding: 0.15rem 0.3rem;
+      border-radius: 4px;
+      font-family: monospace;
+    }
+  </style>
 </head>
 <body>
 
-    <header class="quran-header">
-        <div class="header-container">
-            <h1>আল-কুরআন</h1>
-            <div class="selector-box">
-                <select id="surah-select">
-                    <option value="">সূরা নির্বাচন করুন...</option>
-                </select>
-            </div>
-        </div>
-    </header>
+  <div class="card">
+    <h1>আল-কুরআন ওয়েব অ্যাপ</h1>
+    <p>কুরআন তিলাওয়াত, উচ্চারণ ও বাংলা অনুবাদের মূল পেজে যেতে নিচের লিংকে ক্লিক করুন।</p>
+    
+    <!-- কুরআন পেজের মূল লিংক -->
+    <a href="quran/quran.html" class="btn-link">কুরআন পেজ ওপেন করুন &rarr;</a>
 
-    <main class="quran-container">
-        <!-- সূরার সাধারণ তথ্য এখানে দেখাবে -->
-        <div id="surah-info" class="surah-info hidden">
-            <h2 id="surah-title-bn"></h2>
-            <p id="surah-title-ar" class="arabic-title"></p>
-            <div class="meta-details">
-                <span id="surah-revelation"></span>
-                <span id="surah-total-ayah"></span>
-            </div>
-            <div class="bismillah" id="bismillah-text">বِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
-        </div>
+    <div class="path-checklist">
+      <strong>প্রজেক্ট ফাইল স্ট্রাকচার:</strong>
+      <ul style="margin-top: 0.5rem; padding-left: 1.2rem;">
+        <li>রুট ফাইল: <code>index.html</code></li>
+        <li>মূল পেজ: <code>quran/quran.html</code></li>
+        <li>আরবি ডাটা: <code>data/quran-uthmani.json</code></li>
+        <li>লজিক: <code>js/quran.js</code></li>
+        <li>স্টাইল: <code>css/quran.css</code></li>
+      </ul>
+    </div>
+  </div>
 
-        <!-- আয়াতগুলো লোড হবে এখানে -->
-        <div id="ayah-list" class="ayah-list">
-            <div class="welcome-msg">দয়া করে পড়ার জন্য একটি সূরা নির্বাচন করুন।</div>
-        </div>
-        <a href="quran.html">Qur'an</a>
-        <a href="namaj/namaj-index.html">নামাজ শিক্ষা</a>
-    </main>
-       <!-- ইসলামিক কুইজ গেম ব্যানার -->
-    <section class="feature-section" data-aos="fade-up">
-      <div class="feature-card">
-        <div class="feature-icon">
-          <i class="fa-solid fa-gamepad"></i>
-        </div>
-        <div class="feature-content">
-          <h3>ইসলামিক কুইজ গেম</h3>
-          <p>দৈনন্দিন দোয়া ও নামাজ শিক্ষার সহজ প্রশ্নের উত্তর দিন, কয়েন জিতুন এবং নতুন ধাপ আনলক করুন!</p>
-          <a href="quiz/game.html" class="button button-accent">খেলুন ও শিখুন <i class="fa-solid fa-arrow-right"></i></a>
-        </div>
-      </div>
-    </section>
-   
-
-    <script src="js/quran.js"></script>
 </body>
 </html>
-
