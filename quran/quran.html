@@ -1,1 +1,44 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>আল-কুরআন | আরবি, উচ্চারণ ও বাংলা অনুবাদ</title>
+  <link rel="stylesheet" href="../css/quran.css">
+</head>
+<body>
+
+  <header class="header">
+    <h1>আল-কুরআনুল কারীম</h1>
+    <div class="controls">
+      <label for="surahSelect">সূরা নির্বাচন করুন: </label>
+      <select id="surahSelect">
+        <option value="">লোড হচ্ছে...</option>
+      </select>
+    </div>
+  </header>
+
+  <main class="container">
+    <div id="loading" class="loading">ডাটা লোড হচ্ছে, অনুগ্রহ করে অপেক্ষা করুন...</div>
+    
+    <div id="surahInfo" class="surah-info" style="display: none;">
+      <h2 id="surahTitle"></h2>
+      <p id="surahMeta"></p>
+    </div>
+
+    <div id="ayahList" class="ayah-container"></div>
+  </main>
+
+  <!-- Tanzil Credit Notice (লাইসেন্স শর্তানুসারে আবশ্যক) -->
+  <footer class="footer">
+    <p>
+      কুরআন আরবি টেক্সট সৌজন্যে: 
+      <a href="https://tanzil.net" target="_blank" rel="noopener noreferrer">Tanzil Project</a> 
+      (Creative Commons Attribution 3.0 License).
+    </p>
+  </footer>
+
+  <script src="../js/quran.js"></script>
+</body>
+</html>
 
