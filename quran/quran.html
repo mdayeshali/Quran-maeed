@@ -3,36 +3,65 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>আল-কুরআন | আরবি, উচ্চারণ ও বাংলা অনুবাদ</title>
+  <title>আল-কুরআনুল কারীম | তিলাওয়াত, উচ্চারণ ও অর্থ</title>
+  
+  <!-- গুগল ফন্টস (আরবি ও বাংলার জন্য) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
   <link rel="stylesheet" href="../css/quran.css">
 </head>
 <body>
 
-  <header class="header">
-    <h1>আল-কুরআনুল কারীম</h1>
-    <div class="controls">
-      <label for="surahSelect">সূরা নির্বাচন করুন: </label>
-      <select id="surahSelect">
-        <option value="">লোড হচ্ছে...</option>
-      </select>
+  <!-- টপ নেভিগেশন বার -->
+  <header class="navbar">
+    <div class="nav-container">
+      <div class="logo">
+        <span class="icon">📖</span>
+        <span>আল-কুরআনুল কারীম</span>
+      </div>
+      <button id="themeToggle" class="theme-btn" title="থিম পরিবর্তন করুন">
+        <span id="themeIcon">🌙</span>
+      </button>
     </div>
   </header>
 
-  <main class="container">
-    <div id="loading" class="loading">ডাটা লোড হচ্ছে, অনুগ্রহ করে অপেক্ষা করুন...</div>
-    
-    <div id="surahInfo" class="surah-info" style="display: none;">
-      <h2 id="surahTitle"></h2>
-      <p id="surahMeta"></p>
+  <main class="main-content">
+    <!-- সিলেকশন ও ফিল্টার সেকশন -->
+    <div class="control-box">
+      <div class="select-wrapper">
+        <label for="surahSelect">সূরা নির্বাচন করুন</label>
+        <select id="surahSelect">
+          <option value="">সূরা তালিকা লোড হচ্ছে...</option>
+        </select>
+      </div>
     </div>
 
-    <div id="ayahList" class="ayah-container"></div>
+    <!-- লোডিং স্টেট -->
+    <div id="loading" class="loading-state">
+      <div class="spinner"></div>
+      <p>আয়াতসমূহ প্রস্তুত হচ্ছে...</p>
+    </div>
+
+    <!-- সূরার পরিচিতি ব্যানার -->
+    <div id="surahBanner" class="surah-banner" style="display: none;">
+      <h2 id="surahArabicName" class="surah-arabic-title"></h2>
+      <h3 id="surahBanglaName" class="surah-bangla-title"></h3>
+      <div class="surah-tags">
+        <span id="surahType" class="tag"></span>
+        <span id="surahAyahCount" class="tag"></span>
+      </div>
+    </div>
+
+    <!-- আয়াতের তালিকা -->
+    <div id="ayahContainer" class="ayah-container"></div>
   </main>
 
-  <!-- Tanzil Credit Notice (লাইসেন্স শর্তানুসারে আবশ্যক) -->
-  <footer class="footer">
+  <!-- Tanzil Credit Notice (লাইসেন্স নির্দেশিকা মেনে) -->
+  <footer class="app-footer">
     <p>
-      কুরআন আরবি টেক্সট সৌজন্যে: 
+      আরবি টেক্সট সৌজন্যে: 
       <a href="https://tanzil.net" target="_blank" rel="noopener noreferrer">Tanzil Project</a> 
       (Creative Commons Attribution 3.0 License).
     </p>
@@ -41,4 +70,3 @@
   <script src="../js/quran.js"></script>
 </body>
 </html>
-
