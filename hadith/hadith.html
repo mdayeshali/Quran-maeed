@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>বাংলা হাদিস | Islamic Light</title>
+<meta name="description" content="Islamic Light-এ বাংলা হাদিস পড়ুন। হাদিসের বিষয়, ব্যাখ্যা ও উপকারী শিক্ষা সহজভাবে পড়ুন।">
+<meta name="theme-color" content="#004d40">
+
+<!-- Google Font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- Hadith CSS -->
+<link rel="stylesheet" href="hadith.css">
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header class="hadith-header">
+<div class="header-icon">📖</div>
+<h1>বাংলা হাদিস</h1>
+<p>কুরআন ও সুন্নাহর জ্ঞান সহজভাবে পড়ুন</p>
+</header>
+
+<!-- MAIN -->
+<main class="hadith-container">
+
+<!-- SEARCH -->
+<section class="search-section">
+<div class="search-row">
+<input type="number" id="hadithId" placeholder="হাদিস নম্বর লিখুন" min="1">
+<button id="searchBtn" type="button">দেখুন</button>
+</div>
+<div class="search-help">হাদিস নম্বর দিয়ে নির্দিষ্ট হাদিস খুঁজুন</div>
+</section>
+
+<!-- CATEGORY -->
+<section class="category-section">
+<label for="categorySelect">হাদিসের বিষয় নির্বাচন করুন</label>
+<select id="categorySelect">
+<option value="">বিষয় লোড হচ্ছে...</option>
+</select>
+</section>
+
+<!-- STATUS -->
+<div id="status" class="status"></div>
+
+<!-- HADITH CARD -->
+<article id="hadithCard" class="hadith-card" hidden>
+
+<div class="card-header">
+<div>
+<span class="source-label">HadeethEnc</span>
+<span id="hadithNumber" class="hadith-number"></span>
+</div>
+</div>
+
+<div class="card-body">
+
+<h2 id="hadithTitle" class="hadith-title"></h2>
+
+<div class="divider"></div>
+
+<div id="hadithText" class="hadith-text"></div>
+
+<!-- Explanation -->
+<section id="explanationBox" class="explanation-box" hidden>
+<h3>ব্যাখ্যা</h3>
+<div id="explanation" class="explanation-text"></div>
+</section>
+
+<!-- Hints -->
+<section id="hintsBox" class="hints-box" hidden>
+<h3>উপকারী শিক্ষা</h3>
+<div id="hints" class="hints-text"></div>
+</section>
+
+</div>
+
+<!-- Source -->
+<div class="source-box">
+<span>উৎস:</span>
+<a href="https://hadeethenc.com/bn/" target="_blank" rel="noopener noreferrer">HadeethEnc.com</a>
+</div>
+
+</article>
+
+<!-- NAVIGATION -->
+<div id="navigation" class="navigation" hidden>
+<button id="previousBtn" type="button">← আগের হাদিস</button>
+<span id="positionText"></span>
+<button id="nextBtn" type="button">পরের হাদিস →</button>
+</div>
+
+<!-- FOOTER NOTE -->
+<div class="hadith-note">
+<strong>Islamic Light</strong>
+<p>হাদিসের মূল বক্তব্য পরিবর্তন না করে নির্ভরযোগ্য উৎস থেকে প্রদর্শন করা হচ্ছে।</p>
+</div>
+
+</main>
+
+<!-- JAVASCRIPT -->
+<script src="hadith.js"></script>
+
+</body>
+  </html>
