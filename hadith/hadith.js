@@ -870,19 +870,6 @@ ${escapeHTML(grade)}
 
 
 ${
-narrator
-?
-`
-<div class="narrator">
-বর্ণনাকারী:
-${escapeHTML(narrator)}
-</div>
-`
-:""
-}
-
-
-${
 arabic
 ?
 `
@@ -893,6 +880,17 @@ ${escapeHTML(arabic)}
 :""
 }
 
+${
+narrator
+?
+`
+<div class="narrator">
+বর্ণনাকারী:
+${escapeHTML(narrator)}
+</div>
+`
+:""
+}
 
 <div class="bangla-text">
 ${escapeHTML(bangla)}
