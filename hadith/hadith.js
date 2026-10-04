@@ -1,292 +1,517 @@
-const API_BASE="https://hadeethenc.com/api/v1";
-const LANGUAGE="bn";
+const API="https://cdn.jsdelivr.net/gh/md-rifatkhan/hadithbangla@main/";
 
-let currentCategory="5";
-let hadithList=[];
-let currentIndex=0;
+const BOOKS={
+bukhari:{
+name:"সহিহ বুখারী",
+short:"Sahih Bukhari",
+path:"Bukhari",
+meta:"Bukhari/Meta/bukhari.json",
+chapters:97
+},
+muslim:{
+name:"সহিহ মুসলিম",
+short:"Sahih Muslim",
+path:"Muslim",
+meta:"Muslim/Meta/muslim.json",
+chapters:56
+},
+tirmidhi:{
+name:"জামে' আত-তিরমিযী",
+short:"Sunan At-Tirmidhi",
+path:"At-tirmizi",
+meta:"At-tirmizi/Meta/at-tirmizi.json",
+chapters:46
+},
+nasai:{
+name:"সুনানে নাসায়ী",
+short:"Sunan An-Nasa'i",
+path:"Al-Nasai",
+meta:"Al-Nasai/Meta/nasa'i.json",
+chapters:50
+},
+abudawud:{
+name:"সুনানে আবু দাউদ",
+short:"Sunan Abu Dawood",
+path:"AbuDaud",
+meta:"AbuDaud/Meta/abudaud.json",
+chapters:43
+},
+ibnmajah:{
+name:"সুনানে ইবনে মাজাহ",
+short:"Sunan Ibn Majah",
+path:"Ibne-Mazah",
+meta:"Ibne-Mazah/Meta/ibnemajah.json",
+chapters:37
+}
+};
 
+const state={
+view:"books",
+book:null,
+chapter:null,
+meta:null
+};
+
+const booksView=document.getElementById("booksView");
+const chaptersView=document.getElementById("chaptersView");
+const hadithsView=document.getElementById("hadithsView");
+const booksGrid=document.getElementById("booksGrid");
+const chaptersGrid=document.getElementById("chaptersGrid");
+const hadithList=document.getElementById("hadithList");
 const statusBox=document.getElementById("status");
-const hadithCard=document.getElementById("hadithCard");
-const navigation=document.getElementById("navigation");
-const categorySelect=document.getElementById("categorySelect");
-const hadithIdInput=document.getElementById("hadithId");
+const backBtn=document.getElementById("backBtn");
+const breadcrumb=document.getElementById("breadcrumb");
+const bookTitle=document.getElementById("bookTitle");
+const chapterTitle=document.getElementById("chapterTitle");
+const chapterRange=document.getElementById("chapterRange");
+const emptyState=document.getElementById("emptyState");
+const searchInput=document.getElementById("searchInput");
 const searchBtn=document.getElementById("searchBtn");
-const previousBtn=document.getElementById("previousBtn");
-const nextBtn=document.getElementById("nextBtn");
-const positionText=document.getElementById("positionText");
-const hadithNumber=document.getElementById("hadithNumber");
-const hadithTitle=document.getElementById("hadithTitle");
-const hadithText=document.getElementById("hadithText");
-const explanationBox=document.getElementById("explanationBox");
-const explanation=document.getElementById("explanation");
-const hintsBox=document.getElementById("hintsBox");
-const hints=document.getElementById("hints");
+const scrollTopBtn=document.getElementById("scrollTopBtn");
 
-function showLoading(message){
-statusBox.innerHTML=`
-<div class="loader"></div>
-<div>${message}</div>
-`;
-hadithCard.hidden=true;
-navigation.hidden=true;
-}
-
-function showError(message){
-statusBox.innerHTML=`
-<div class="error">${message}</div>
-`;
-hadithCard.hidden=true;
-navigation.hidden=true;
-}
-
-function clearStatus(){
+function showStatus(message="",loading=false){
+if(!message){
 statusBox.innerHTML="";
+return;
 }
 
-async function loadCategories(){
-try{
-const response=await fetch(
-`${API_BASE}/categories/list/?language=${LANGUAGE}`
-);
+statusBox.innerHTML=loading
+?`<div class="loader"></div><div>${message}</div>`
+:`<div class="error">${message}</div>`;
+}
+
+function escapeHTML(value=""){
+return String(value)
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
+}
+
+async function getJSON(url){
+const response=await fetch(url,{cache:"no-cache"});
 
 if(!response.ok){
-throw new Error(`HTTP ${response.status}`);
+throw new Error("HTTP "+response.status);
 }
 
-const categories=await response.json();
+return await response.json();
+}
 
-categorySelect.innerHTML="";
+function showView(view){
+booksView.hidden=view!=="books";
+chaptersView.hidden=view!=="chapters";
+hadithsView.hidden=view!=="hadiths";
+emptyState.hidden=true;
 
-const rootCategories=categories.filter(
-category=>category.parent_id===null
-);
+state.view=view;
 
-rootCategories.forEach(category=>{
-const option=document.createElement("option");
-option.value=category.id;
-option.textContent=`${category.title} (${category.hadeeths_count})`;
-categorySelect.appendChild(option);
+backBtn.hidden=view==="books";
+
+if(view==="books"){
+breadcrumb.textContent="হাদিস গ্রন্থ";
+}
+
+if(view==="chapters"){
+breadcrumb.textContent=state.book.name+" › অধ্যায়";
+}
+
+if(view==="hadiths"){
+breadcrumb.textContent=
+state.book.name+" › "+state.chapter.title;
+}
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+}
+
+function renderBooks(){
+booksGrid.innerHTML="";
+
+Object.entries(BOOKS).forEach(([key,book])=>{
+const card=document.createElement("div");
+
+card.className="book-card";
+
+card.innerHTML=`
+<div class="book-icon">📖</div>
+<div class="book-info">
+<h3>${escapeHTML(book.name)}</h3>
+<p>${escapeHTML(book.short)}</p>
+</div>
+<div class="book-arrow">›</div>
+`;
+
+card.addEventListener("click",()=>{
+loadChapters(key);
 });
 
-categorySelect.value=currentCategory;
+booksGrid.appendChild(card);
+});
+}
 
-}catch(error){
-console.error("Category Error:",error);
+async function loadChapters(bookKey){
+const book=BOOKS[bookKey];
 
-categorySelect.innerHTML=`
-<option value="5">বিষয় নির্বাচন করা যাচ্ছে না</option>
+state.book=book;
+state.chapter=null;
+state.meta=null;
+
+showView("chapters");
+
+bookTitle.textContent=book.name;
+showStatus("অধ্যায় লোড হচ্ছে...",true);
+
+chaptersGrid.innerHTML="";
+
+try{
+const meta=await getJSON(API+book.meta);
+
+state.meta=meta;
+
+const entries=Object.entries(meta);
+
+if(!entries.length){
+throw new Error("No chapters");
+}
+
+chaptersGrid.innerHTML="";
+
+entries.forEach(([number,data])=>{
+const card=document.createElement("div");
+
+card.className="chapter-card";
+
+const title=data.title||"অধ্যায়";
+const range=data.hadis_range||"";
+
+card.innerHTML=`
+<div class="chapter-number">${escapeHTML(number)}</div>
+<div class="chapter-info">
+<h3>${escapeHTML(title)}</h3>
+<span>হাদিস: ${escapeHTML(range)}</span>
+</div>
 `;
+
+card.addEventListener("click",()=>{
+loadHadiths(bookKey,number,title,range);
+});
+
+chaptersGrid.appendChild(card);
+});
+
+showStatus("");
+
+}catch(error){
+console.error(error);
+showStatus(
+"অধ্যায় লোড করা সম্ভব হচ্ছে না। কিছুক্ষণ পরে আবার চেষ্টা করুন।"
+);
 }
 }
 
-async function loadHadithList(categoryId=currentCategory){
-currentCategory=categoryId;
+async function loadHadiths(bookKey,chapterNumber,title,range){
+const book=BOOKS[bookKey];
 
-showLoading("বাংলা হাদিসের তালিকা লোড হচ্ছে...");
+state.book=book;
+state.chapter={
+number:chapterNumber,
+title,
+range
+};
+
+showView("hadiths");
+
+chapterTitle.textContent=title;
+chapterRange.textContent=range
+?`হাদিস নম্বর: ${range}`
+:"";
+
+showStatus("হাদিস লোড হচ্ছে...",true);
+
+hadithList.innerHTML="";
 
 try{
 const url=
-`${API_BASE}/hadeeths/list/?language=${LANGUAGE}&category_id=${encodeURIComponent(categoryId)}&page=1&per_page=20`;
+`${API}${book.path}/Chapter/${chapterNumber}.json`;
 
-console.log("Hadith List API:",url);
+const data=await getJSON(url);
 
-const response=await fetch(url);
+let hadiths=extractHadiths(data);
 
-if(!response.ok){
-throw new Error(`HTTP ${response.status}`);
+if(!hadiths.length){
+throw new Error("No hadith found");
 }
 
-const result=await response.json();
+renderHadiths(hadiths);
 
-console.log("Hadith List:",result);
-
-if(!result||!Array.isArray(result.data)){
-throw new Error("Invalid API response");
-}
-
-hadithList=result.data.filter(
-item=>
-Array.isArray(item.translations)&&
-item.translations.includes(LANGUAGE)
-);
-
-if(hadithList.length===0){
-throw new Error("এই বিভাগে বাংলা হাদিস পাওয়া যায়নি।");
-}
-
-currentIndex=0;
-
-await loadHadith(hadithList[0].id);
+showStatus("");
 
 }catch(error){
-console.error("Hadith List Error:",error);
+console.error(error);
 
-showError(
-"হাদিস লোড করা যাচ্ছে না। ইন্টারনেট সংযোগ পরীক্ষা করে আবার চেষ্টা করুন।"
+showStatus(
+"এই অধ্যায়ের হাদিস লোড করা সম্ভব হচ্ছে না।"
 );
 }
 }
 
-async function loadHadith(id){
-showLoading("হাদিস লোড হচ্ছে...");
+function extractHadiths(data){
+if(Array.isArray(data))return data;
 
+if(Array.isArray(data.hadiths))return data.hadiths;
+
+if(data.hadith)return[data.hadith];
+
+if(data.data&&Array.isArray(data.data))return data.data;
+
+if(data.data&&data.data.hadith)return[data.data.hadith];
+
+return[];
+}
+
+function normalizeHadith(item){
+if(item.hadith)return item.hadith;
+
+if(item.data&&item.data.hadith){
+return item.data.hadith;
+}
+
+return item;
+}
+
+function renderHadiths(items){
+hadithList.innerHTML="";
+
+items.forEach((item,index)=>{
+const hadith=normalizeHadith(item);
+
+const id=hadith.hadith_id||hadith.id||index+1;
+const narrator=hadith.narrator||"";
+const bangla=hadith.bn||hadith.bangla||"";
+const arabic=hadith.ar||hadith.arabic||"";
+const grade=hadith.grade||"";
+const note=hadith.note||"";
+
+const card=document.createElement("article");
+
+card.className="hadith-card";
+
+card.innerHTML=`
+<div class="hadith-head">
+<span class="hadith-number">
+হাদিস নং: ${escapeHTML(id)}
+</span>
+
+${grade
+?`<span class="hadith-grade">${escapeHTML(grade)}</span>`
+:""}
+</div>
+
+<div class="hadith-body">
+
+${narrator
+?`<div class="narrator">
+বর্ণনাকারী: ${escapeHTML(narrator)}
+</div>`
+:""}
+
+${arabic
+?`<div class="arabic-text">${escapeHTML(arabic)}</div>`
+:""}
+
+<div class="bangla-text">
+${escapeHTML(bangla)}
+</div>
+
+${note
+?`<div class="note">
+<strong>নোট:</strong> ${escapeHTML(note)}
+</div>`
+:""}
+
+<div class="hadith-actions">
+
+<button
+class="action-btn copy-btn"
+type="button">
+কপি
+</button>
+
+<button
+class="action-btn share-btn"
+type="button">
+শেয়ার
+</button>
+
+</div>
+
+</div>
+`;
+
+const copyBtn=card.querySelector(".copy-btn");
+const shareBtn=card.querySelector(".share-btn");
+
+const shareText=
+`${state.book.name}
+হাদিস নং: ${id}
+
+${bangla}
+
+উৎস: Islamic Light`;
+
+copyBtn.addEventListener("click",async()=>{
 try{
-const url=
-`${API_BASE}/hadeeths/one/?language=${LANGUAGE}&id=${encodeURIComponent(id)}`;
+await navigator.clipboard.writeText(shareText);
 
-console.log("Single Hadith API:",url);
+copyBtn.textContent="কপি হয়েছে ✓";
 
-const response=await fetch(url);
+setTimeout(()=>{
+copyBtn.textContent="কপি";
+},1500);
 
-if(!response.ok){
-throw new Error(`HTTP ${response.status}`);
+}catch{
+copyBtn.textContent="কপি করা যায়নি";
 }
+});
 
-const data=await response.json();
-
-console.log("Hadith:",data);
-
-if(!data||!data.id){
-throw new Error("হাদিস পাওয়া যায়নি।");
-}
-
-displayHadith(data);
-
-clearStatus();
-
-hadithCard.hidden=false;
-navigation.hidden=false;
-
-updateNavigation();
-
-}catch(error){
-console.error("Single Hadith Error:",error);
-
-showError(
-"হাদিস লোড করা সম্ভব হচ্ছে না। কিছুক্ষণ পরে আবার চেষ্টা করুন।"
-);
-}
-}
-
-function displayHadith(data){
-hadithNumber.textContent=`হাদিস নং ${data.id}`;
-
-hadithTitle.textContent=
-data.title||"হাদিস";
-
-hadithText.textContent=
-data.hadeeth||
-"হাদিসের বক্তব্য পাওয়া যায়নি।";
-
-if(data.explanation&&data.explanation.trim()){
-explanation.textContent=data.explanation;
-explanationBox.hidden=false;
+shareBtn.addEventListener("click",async()=>{
+if(navigator.share){
+try{
+await navigator.share({
+title:`${state.book.name} - হাদিস ${id}`,
+text:shareText
+});
+}catch{}
 }else{
-explanationBox.hidden=true;
+await navigator.clipboard.writeText(shareText);
+
+shareBtn.textContent="কপি হয়েছে ✓";
+
+setTimeout(()=>{
+shareBtn.textContent="শেয়ার";
+},1500);
 }
+});
 
-if(Array.isArray(data.hints)&&data.hints.length>0){
-hints.textContent=data.hints.join("\n");
-hintsBox.hidden=false;
-}else if(typeof data.hints==="string"&&data.hints.trim()){
-hints.textContent=data.hints;
-hintsBox.hidden=false;
-}else{
-hintsBox.hidden=true;
-}
-
-hadithIdInput.value=data.id;
-}
-
-function updateNavigation(){
-previousBtn.disabled=currentIndex<=0;
-
-nextBtn.disabled=
-currentIndex>=hadithList.length-1;
-
-positionText.textContent=
-`${currentIndex+1} / ${hadithList.length}`;
-}
-
-async function nextHadith(){
-if(currentIndex>=hadithList.length-1){
-return;
-}
-
-currentIndex++;
-
-const id=hadithList[currentIndex].id;
-
-await loadHadith(id);
-}
-
-async function previousHadith(){
-if(currentIndex<=0){
-return;
-}
-
-currentIndex--;
-
-const id=hadithList[currentIndex].id;
-
-await loadHadith(id);
+hadithList.appendChild(card);
+});
 }
 
 async function searchHadith(){
-const id=hadithIdInput.value.trim();
+const value=searchInput.value.trim();
 
-if(!id){
-showError("হাদিস নম্বর লিখুন।");
+if(!value){
+searchInput.focus();
 return;
 }
 
-await loadHadith(id);
+if(!state.book){
+showStatus("প্রথমে একটি হাদিস গ্রন্থ নির্বাচন করুন।");
+return;
+}
 
-const index=hadithList.findIndex(
-item=>String(item.id)===String(id)
+const id=parseInt(value,10);
+
+if(!Number.isInteger(id)||id<1){
+showStatus("সঠিক হাদিস নম্বর লিখুন।");
+return;
+}
+
+showStatus("হাদিস খোঁজা হচ্ছে...",true);
+
+hadithList.innerHTML="";
+
+showView("hadiths");
+
+try{
+const url=
+`${API}${state.book.path}/hadith/${id}.json`;
+
+const data=await getJSON(url);
+
+const hadith=
+data.hadith||
+(data.data&&data.data.hadith)||
+data;
+
+if(!hadith||!hadith.hadith_id){
+throw new Error("Hadith not found");
+}
+
+const chapterNumber=
+hadith.chapter?.chapter_number;
+
+if(chapterNumber!==undefined){
+const chapterData=state.meta?.[chapterNumber];
+
+if(chapterData){
+state.chapter={
+number:chapterNumber,
+title:chapterData.title,
+range:chapterData.hadis_range
+};
+
+chapterTitle.textContent=chapterData.title;
+chapterRange.textContent=
+`হাদিস নম্বর: ${chapterData.hadis_range||""}`;
+}
+
+breadcrumb.textContent=
+state.book.name+" › হাদিস "+hadith.hadith_id;
+}
+
+renderHadiths([hadith]);
+
+showStatus("");
+
+}catch(error){
+console.error(error);
+
+showStatus(
+"এই নম্বরের হাদিস পাওয়া যায়নি। হাদিস নম্বরটি সঠিক কিনা দেখুন।"
 );
-
-if(index!==-1){
-currentIndex=index;
-updateNavigation();
 }
 }
 
-searchBtn.addEventListener(
-"click",
-searchHadith
+backBtn.addEventListener("click",()=>{
+if(state.view==="hadiths"){
+loadChapters(
+Object.keys(BOOKS).find(
+key=>BOOKS[key]===state.book
+)
 );
-
-previousBtn.addEventListener(
-"click",
-previousHadith
-);
-
-nextBtn.addEventListener(
-"click",
-nextHadith
-);
-
-categorySelect.addEventListener(
-"change",
-function(){
-loadHadithList(this.value);
+return;
 }
-);
 
-hadithIdInput.addEventListener(
-"keydown",
-function(event){
+if(state.view==="chapters"){
+state.book=null;
+showView("books");
+return;
+}
+});
+
+searchBtn.addEventListener("click",searchHadith);
+
+searchInput.addEventListener("keydown",event=>{
 if(event.key==="Enter"){
 searchHadith();
 }
-}
-);
+});
 
-async function startHadithPage(){
-showLoading("হাদিস প্রস্তুত হচ্ছে...");
-await loadCategories();
-await loadHadithList(currentCategory);
-}
+window.addEventListener("scroll",()=>{
+scrollTopBtn.style.display=
+window.scrollY>400?"block":"none";
+});
 
-startHadithPage();
+scrollTopBtn.addEventListener("click",()=>{
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+});
+
+renderBooks();
