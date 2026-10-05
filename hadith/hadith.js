@@ -792,7 +792,7 @@ function renderHadiths(items){
 
 hadithList.innerHTML="";
 
-if(!items.length){
+if(!items || !items.length){
 
 emptyState.hidden=false;
 
@@ -800,17 +800,20 @@ return;
 
 }
 
+const processedHadiths = items.map((item, index) => {
+  const hadith = normalizeHadith(item);
+  const rawId = hadith.hadith_id ?? hadith.id ?? (index + 1);
+  return {
+    raw: hadith,
+    id: rawId,
+    numericId: parseInt(rawId, 10) || 0
+  };
+});
 
-items.forEach(
-(item,index)=>{
+processedHadiths.sort((a, b) => a.numericId - b.numericId);
 
-const hadith=
-normalizeHadith(item);
-
-const id=
-hadith.hadith_id||
-hadith.id||
-index+1;
+processedHadiths.forEach(
+({ raw: hadith, id })=>{
 
 const narrator=
 hadith.narrator||
@@ -1673,3 +1676,4 @@ behavior:"smooth"
 renderBooks();
 
 openFromURL();
+   
