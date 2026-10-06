@@ -19,7 +19,7 @@ async function loadPartials() {
     // 📢 Hero Update Banner লোড করার কোড
     const heroBox = document.getElementById("heroUpdateBox");
     if (heroBox) {
-      const bannerReq = await fetch("/update-banner.html");
+      const bannerReq = await fetch("include/update-banner.html");
       if (bannerReq.ok) {
         heroBox.innerHTML = await bannerReq.text();
       }
@@ -29,3 +29,9 @@ async function loadPartials() {
     console.error("Partial loading failed:", err);
   }
 }
+
+
+
+
+
+
