@@ -1,0 +1,89 @@
+/* ==========================================
+   📢 Hero Section Inline Update / Ad Banner
+========================================== */
+.hero-ad-banner {
+  margin: 20px auto 0;
+  max-width: 650px;
+  width: 100%;
+}
+
+.ad-card-inner {
+  background: var(--card-bg, #ffffff);
+  border: 1.5px solid var(--accent, #009688);
+  border-left: 5px solid var(--accent, #009688);
+  border-radius: 12px;
+  padding: 16px 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ad-card-inner:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.ad-card-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  align-self: flex-start;
+  background: #e11d48; /* আকর্ষণীয় লালচে হাইলাইট */
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  letter-spacing: 0.3px;
+}
+
+.ad-card-title {
+  font-size: 1.1rem;
+  color: var(--primary, #004d40);
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.ad-card-desc {
+  font-size: 0.95rem;
+  color: var(--text, #333);
+  line-height: 1.6;
+  opacity: 0.9;
+  margin-bottom: 10px;
+}
+
+.ad-card-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--primary, #004d40);
+  color: #ffffff !important;
+  font-size: 13.5px;
+  font-weight: 600;
+  padding: 7px 16px;
+  border-radius: 6px;
+  text-decoration: none;
+  align-self: flex-start;
+  transition: background 0.2s ease;
+}
+
+.ad-card-action:hover {
+  background: var(--accent, #009688);
+}
+
+/* ডার্ক মোড সাপোর্ট */
+[data-theme="dark"] .ad-card-inner {
+  background: #1a1a1a;
+  border-color: #00796b;
+  border-left-color: #009688;
+}
+
+[data-theme="dark"] .ad-card-title {
+  color: #4db6ac;
+}
+
+[data-theme="dark"] .ad-card-desc {
+  color: #ddd;
+}
