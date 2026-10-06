@@ -1,37 +1,21 @@
-async function loadPartials() {
+/* =======================================================
+   📢 Auto-load Update Banner from include/update-banner.html
+========================================================= */
+async function loadUpdateBanner() {
+  const heroBox = document.getElementById("heroUpdateBox");
+  if (!heroBox) return;
+
   try {
-    const headerReq = await fetch("/header.html");
-    const footerReq = await fetch("/footer.html");
-
-    if (headerReq.ok && footerReq.ok) {
-      const headerHTML = await headerReq.text();
-      const footerHTML = await footerReq.text();
-
-      document.body.insertAdjacentHTML("afterbegin", headerHTML);
-      document.body.insertAdjacentHTML("beforeend", footerHTML);
-
-      initNavMenu();       
-      initThemeToggle();   
-      initInstallBtn();    
-      initNavDropdown();
+    const res = await fetch("/include/update-banner.html");
+    if (!res.ok) {
+      throw new Error(`Banner file load failed with status: ${res.status}`);
     }
-
-    // 📢 Hero Update Banner লোড করার কোড
-    const heroBox = document.getElementById("heroUpdateBox");
-    if (heroBox) {
-      const bannerReq = await fetch("include/update-banner.html");
-      if (bannerReq.ok) {
-        heroBox.innerHTML = await bannerReq.text();
-      }
-    }
-
+    const htmlData = await res.text();
+    heroBox.innerHTML = htmlData;
   } catch (err) {
-    console.error("Partial loading failed:", err);
+    console.error("Update banner loading error:", err);
   }
 }
 
-
-
-
-
-
+// DOM লোড সম্পন্ন হলে ফাংশন চালু করা
+document.addEventListener("DOMContentLoaded", loadUpdateBanner);
