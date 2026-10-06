@@ -1062,7 +1062,70 @@ html.dark .daily-btn,
   border-color: rgba(255, 255, 255, 0.1);
   color: #e5e7eb;
 }
-/* বাটন দুটির কন্টেইনার (পাশাপাশি সুন্দ
+/* বাটন দুটির কন্টেইনার (পাশাপাশি সুন্দরভাবে বসানোর জন্য) */
+.quran-btn-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px; /* বাটন দুটির মাঝের ফাঁকা জায়গা */
+  flex-wrap: wrap; /* ছোট স্ক্রিনে প্রয়োজনে নিচে নামবে */
+  margin-top: 18px;
+}
+
+/* কমন বাটন স্টাইল */
+.quran-action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 18px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: all 0.25s ease;
+  min-width: 135px;
+}
+
+/* ১. বাংলা কুরআন বাটন (মূল সবুজ থিম) */
+.quran-action-btn.btn-read {
+  background-color: var(--primary-color, #0b7355);
+  color: #ffffff;
+  border: 1px solid var(--primary-color, #0b7355);
+}
+
+.quran-action-btn.btn-read:hover {
+  background-color: var(--primary-hover, #085a42);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(11, 115, 85, 0.2);
+}
+
+/* ২. অডিও কুরআন বাটন (আউটলাইন ও প্রফেশনাল লুক) */
+.quran-action-btn.btn-audio {
+  background-color: transparent;
+  color: var(--primary-color, #0b7355);
+  border: 1.5px solid var(--primary-color, #0b7355);
+}
+
+.quran-action-btn.btn-audio:hover {
+  background-color: var(--primary-color, #0b7355);
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(11, 115, 85, 0.2);
+}
+
+/* ডার্ক মোডের জন্য অ্যাডজাস্টমেন্ট */
+body.dark-mode .quran-action-btn.btn-audio,
+[data-theme="dark"] .quran-action-btn.btn-audio {
+  color: var(--primary-color, #10b981);
+  border-color: var(--primary-color, #10b981);
+}
+
+body.dark-mode .quran-action-btn.btn-audio:hover,
+[data-theme="dark"] .quran-action-btn.btn-audio:hover {
+  background-color: var(--primary-color, #10b981);
+  color: #0f172a;
+   }
 
 
 
