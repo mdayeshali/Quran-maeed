@@ -1,89 +1,641 @@
-/* ==========================================
-   📢 Hero Section Inline Update / Ad Banner
-========================================== */
-.hero-ad-banner {
-  margin: 20px auto 0;
-  max-width: 650px;
-  width: 100%;
+/* =========================================
+   Islamic Light
+   Dynamic Update Banner
+   ========================================= */
+
+.update-section {
+
+    width: 100%;
+
+    padding: 18px 12px 10px;
+
+    position: relative;
+
+    z-index: 2;
 }
 
-.ad-card-inner {
-  background: var(--card-bg, #ffffff);
-  border: 1.5px solid var(--accent, #009688);
-  border-left: 5px solid var(--accent, #009688);
-  border-radius: 12px;
-  padding: 16px 20px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+/* =========================================
+   CARD
+   ========================================= */
+
+.update-card {
+
+    width: 100%;
+    max-width: 900px;
+
+    min-height: 190px;
+
+    margin: auto;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 20px;
+
+    padding: 23px 55px 23px 23px;
+
+    position: relative;
+
+    overflow: hidden;
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #f4faf8
+        );
+
+    border: 1px solid rgba(0,77,64,0.10);
+
+    box-shadow:
+        0 12px 35px rgba(0,0,0,0.13);
+
+    transition:
+        opacity 0.25s ease,
+        transform 0.25s ease;
 }
 
-.ad-card-inner:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+
+/* Decorative Glow */
+
+.update-card::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 190px;
+    height: 190px;
+
+    right: -90px;
+    top: -90px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(0,121,107,0.08);
+
+    pointer-events: none;
 }
 
-.ad-card-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  align-self: flex-start;
-  background: #e11d48;
-  color: #ffffff;
-  font-size: 12px;
-  font-weight: 700;
-  padding: 3px 10px;
-  border-radius: 20px;
-  letter-spacing: 0.3px;
+
+.update-card::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 100px;
+    height: 100px;
+
+    left: -50px;
+    bottom: -50px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(0,77,64,0.06);
+
+    pointer-events: none;
 }
 
-.ad-card-title {
-  font-size: 1.1rem;
-  color: var(--primary, #004d40);
-  font-weight: 700;
-  margin-bottom: 4px;
+
+/* =========================================
+   ICON
+   ========================================= */
+
+.update-icon {
+
+    width: 68px;
+    height: 68px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #004d40,
+            #00796b
+        );
+
+    color: #ffffff;
+
+    font-size: 29px;
+
+    box-shadow:
+        0 8px 20px rgba(0,77,64,0.25);
+
+    position: relative;
+
+    z-index: 1;
 }
 
-.ad-card-desc {
-  font-size: 0.95rem;
-  color: var(--text, #333);
-  line-height: 1.6;
-  opacity: 0.9;
-  margin-bottom: 10px;
+
+/* =========================================
+   CONTENT
+   ========================================= */
+
+.update-content {
+
+    flex: 1;
+
+    min-width: 0;
+
+    position: relative;
+
+    z-index: 1;
 }
 
-.ad-card-action {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: var(--primary, #004d40);
-  color: #ffffff !important;
-  font-size: 13.5px;
-  font-weight: 600;
-  padding: 7px 16px;
-  border-radius: 6px;
-  text-decoration: none;
-  align-self: flex-start;
-  transition: background 0.2s ease;
+
+/* =========================================
+   TOP
+   ========================================= */
+
+.update-top {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-bottom: 7px;
 }
 
-.ad-card-action:hover {
-  background: var(--accent, #009688);
+
+.update-badge {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    padding: 5px 10px;
+
+    border-radius: 30px;
+
+    background: #e6f4f1;
+
+    color: #00695c;
+
+    font-size: 11px;
+
+    font-weight: 800;
 }
 
-/* ডার্ক মোড সাপোর্ট */
-[data-theme="dark"] .ad-card-inner {
-  background: #1a1a1a;
-  border-color: #00796b;
-  border-left-color: #009688;
+
+.update-dot {
+
+    width: 6px;
+    height: 6px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: #00a88f;
+
+    animation: updatePulse 1.8s infinite;
 }
 
-[data-theme="dark"] .ad-card-title {
-  color: #4db6ac;
+
+.update-date {
+
+    color: #777;
+
+    font-size: 11px;
 }
 
-[data-theme="dark"] .ad-card-desc {
-  color: #ddd;
+
+/* =========================================
+   TITLE
+   ========================================= */
+
+.update-title {
+
+    margin: 0 0 7px;
+
+    color: #173b35;
+
+    font-size: 20px;
+
+    line-height: 1.45;
+
+    font-weight: 800;
+}
+
+
+/* =========================================
+   DESCRIPTION
+   ========================================= */
+
+.update-description {
+
+    margin: 0;
+
+    max-width: 650px;
+
+    color: #555;
+
+    font-size: 14px;
+
+    line-height: 1.75;
+}
+
+
+/* =========================================
+   BOTTOM
+   ========================================= */
+
+.update-bottom {
+
+    margin-top: 15px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+}
+
+
+/* =========================================
+   NUMBER
+   ========================================= */
+
+.update-progress {
+
+    color: #777;
+
+    font-size: 11px;
+
+    font-weight: 600;
+}
+
+
+/* =========================================
+   BUTTON
+   ========================================= */
+
+.update-button {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    padding: 9px 15px;
+
+    border-radius: 9px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #004d40,
+            #00796b
+        );
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    box-shadow:
+        0 6px 15px rgba(0,77,64,0.20);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+
+.update-button:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 9px 20px rgba(0,77,64,0.28);
+}
+
+
+.update-button .arrow {
+
+    transition:
+        transform 0.25s ease;
+}
+
+
+.update-button:hover .arrow {
+
+    transform:
+        translateX(4px);
+}
+
+
+/* =========================================
+   NAVIGATION
+   ========================================= */
+
+.update-navigation {
+
+    position: absolute;
+
+    right: 12px;
+    top: 50%;
+
+    transform:
+        translateY(-50%);
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 6px;
+
+    z-index: 5;
+}
+
+
+.update-nav {
+
+    width: 29px;
+    height: 29px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: #e8f1ef;
+
+    color: #004d40;
+
+    font-size: 20px;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.update-nav:hover {
+
+    background: #004d40;
+
+    color: #ffffff;
+
+    transform: scale(1.08);
+}
+
+
+/* =========================================
+   DOTS
+   ========================================= */
+
+.update-dots {
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 6px;
+
+    margin-top: 9px;
+}
+
+
+.update-dot-item {
+
+    width: 6px;
+    height: 6px;
+
+    padding: 0;
+
+    border: none;
+
+    border-radius: 20px;
+
+    background: #c5d4d1;
+
+    cursor: pointer;
+
+    transition:
+        width 0.25s ease,
+        background 0.25s ease;
+}
+
+
+.update-dot-item.active {
+
+    width: 20px;
+
+    background: #004d40;
+}
+
+
+/* =========================================
+   SLIDE ANIMATION
+   ========================================= */
+
+.update-card.is-changing {
+
+    opacity: 0;
+
+    transform:
+        translateY(6px);
+}
+
+
+/* =========================================
+   PULSE
+   ========================================= */
+
+@keyframes updatePulse {
+
+    0% {
+
+        box-shadow:
+            0 0 0 0
+            rgba(0,168,143,0.45);
+    }
+
+    70% {
+
+        box-shadow:
+            0 0 0 7px
+            rgba(0,168,143,0);
+    }
+
+    100% {
+
+        box-shadow:
+            0 0 0 0
+            rgba(0,168,143,0);
+    }
+}
+
+
+/* =========================================
+   TABLET
+   ========================================= */
+
+@media (max-width: 700px) {
+
+    .update-card {
+
+        gap: 15px;
+
+        padding: 20px 48px 20px 19px;
+    }
+
+    .update-icon {
+
+        width: 58px;
+        height: 58px;
+
+        border-radius: 15px;
+
+        font-size: 25px;
+    }
+
+    .update-title {
+
+        font-size: 18px;
+    }
+
+    .update-description {
+
+        font-size: 13px;
+    }
+}
+
+
+/* =========================================
+   MOBILE
+   ========================================= */
+
+@media (max-width: 520px) {
+
+    .update-section {
+
+        padding:
+            12px
+            10px
+            8px;
+    }
+
+
+    .update-card {
+
+        display: block;
+
+        min-height: 0;
+
+        padding: 19px 47px 19px 19px;
+
+        border-radius: 17px;
+    }
+
+
+    .update-icon {
+
+        width: 50px;
+        height: 50px;
+
+        margin-bottom: 12px;
+
+        border-radius: 14px;
+
+        font-size: 22px;
+    }
+
+
+    .update-title {
+
+        font-size: 17px;
+
+        line-height: 1.5;
+    }
+
+
+    .update-description {
+
+        font-size: 13px;
+
+        line-height: 1.7;
+    }
+
+
+    .update-bottom {
+
+        margin-top: 13px;
+    }
+
+
+    .update-button {
+
+        padding: 9px 13px;
+
+        font-size: 12px;
+    }
+
+
+    .update-navigation {
+
+        right: 10px;
+    }
+}
+
+
+/* =========================================
+   SMALL MOBILE
+   ========================================= */
+
+@media (max-width: 360px) {
+
+    .update-card {
+
+        padding-left: 16px;
+    }
+
+    .update-title {
+
+        font-size: 16px;
+    }
+
+    .update-description {
+
+        font-size: 12px;
+    }
 }
